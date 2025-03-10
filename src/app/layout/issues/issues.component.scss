@@ -14,10 +14,11 @@ $border-radius: 20px;
 }
 
 .example-box {
-  padding: 20px 10px;
+  display: grid;
+  grid-template-columns: 20px 1fr 50px;
+  //padding: 20px 10px;
   min-height: $min-height;
   border-bottom: solid 1px #ccc;
-  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -26,6 +27,15 @@ $border-radius: 20px;
   background-color: var(--md-sys-primary-container);
   color: var(--md-sys-on-primary-container);
   border-radius: $border-radius;
+  gap: 16px;
+  &__priority {
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius 0px 0px $border-radius;
+  }
+  &__info {
+
+  }
 }
 
 .cdk-drag-preview {

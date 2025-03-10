@@ -1,8 +1,26 @@
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
   @for (issue of issues; track issue.id) {
     <div class="example-box" cdkDrag>
+      <div class="example-box__priority" [ngStyle]="{'background-color': priorityColors[issue.priority]}"></div>
       <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-      {{issue.code}}
+      <div class="example-box__info">
+        <p>{{issue.code}} - {{issue.name}}: {{issue.description}}</p>
+      </div>
+      <div class="example-box__menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>arrow_upward</mat-icon>
+              <span>Update</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </button>
+      </div>
     </div>
   }
 </div>

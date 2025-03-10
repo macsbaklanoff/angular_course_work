@@ -5,12 +5,10 @@ import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {AsyncPipe} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
+import {AsyncPipe, NgStyle} from '@angular/common';
 import {CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import {IIssue} from '../../interfaces/issue.interface';
-import {Observable, of, toArray} from 'rxjs';
-
+import {MatMenu, MatMenuItem, MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-issues',
@@ -20,10 +18,13 @@ import {Observable, of, toArray} from 'rxjs';
     MatTableModule,
     MatIcon,
     FormsModule,
-    AsyncPipe,
     CdkDropList,
     CdkDrag,
-    CdkDragPlaceholder
+    CdkDragPlaceholder,
+    NgStyle,
+    MatMenuTrigger,
+    MatMenu,
+    MatMenuItem
   ],
   templateUrl: './issues.component.html',
   styleUrl: 'issues.component.scss'
@@ -35,6 +36,13 @@ export class IssuesComponent implements OnInit {
   public readonly projectId = input.required<string>();
 
   public issues: IIssue[] = [];
+
+  public priorityColors: {[key: number]: string} = {
+    0: '#DB4242', // Красный
+    1: '#EBA134', // Оранжевый
+    2: '#dbd765', // Жёлтый
+    3: '#45a85b', // Зелёный
+  };
 
   constructor() {
     effect(() => {
