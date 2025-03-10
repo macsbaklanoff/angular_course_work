@@ -1,0 +1,37 @@
+@use 'theme-colors' as test_theme;
+@use '@angular/material' as mat;
+.project-component {
+  display: grid;
+  &__header {
+    display: grid;
+    grid-template-columns: minmax(50px, 300px) 1fr;
+    &__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  &__view {
+    display: grid;
+    grid-template-columns: minmax(50px, 300px) 1fr;
+    &__projects {
+      padding: 10px;
+      background-color: var(--md-sys-secondary);
+      border-radius: 20px;
+      &__item {
+        min-height: 120px;
+        padding: 5px;
+        border: 1px solid #000000;
+        border-radius: 20px;
+        margin-top: 12px;
+      }
+    }
+  }
+  &__issues {
+    margin-left: 50px;
+  }
+}
+p {
+  margin: 0;
+  padding: 5px;
+}

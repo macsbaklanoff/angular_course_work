@@ -1,0 +1,41 @@
+<div class="project-component">
+  <div class="project-component__header">
+    <div class="project-component__header__left">
+      <h3 class="project-component__header__item">Projects</h3>
+    </div>
+    <div class="project-component__header__item">
+      <h3 class="project-component__header__text">Issues</h3>
+    </div>
+  </div>
+  <div class="project-component__view">
+    <div class="project-component__view__projects">
+      @for (project of dataSource.$data | async; track project.id) {
+        <div class="project-component__view__projects__item" routerLink="{{ project.id }}">
+          <p class="project-component__view__projects__item__name">{{ project.code }} - {{ project.name }}</p>
+          <p class="project-component__view__projects__item__info">
+            Created: {{ project.audit.createdOn.split(".")[0].split("T")[0] }}
+            {{ project.audit.createdOn.split(".")[0].split("T")[1] }}
+          </p>
+          <p class="project-component__view__projects__item__info">
+            Modified: {{ project.audit.modifiedOn.split(".")[0].split("T")[0] }}
+            {{ project.audit.modifiedOn.split(".")[0].split("T")[1] }}
+          </p>
+          <mat-checkbox>Select</mat-checkbox>
+        </div>
+      }
+    </div>
+    <div class="project-component__issues">
+      <router-outlet/>
+    </div>
+  </div>
+</div>
+
+
+<!--<button mat-button (click)="createProject()">Create Project</button>-->
+
+<!--@for (project of dataSource.$data | async; track project.id) {-->
+<!--  <div class="project" routerLink="{{ project.id }}">-->
+<!--    <p>{{ project.name }}</p>-->
+<!--  </div>-->
+<!--}-->
+<!--<router-outlet/>-->
