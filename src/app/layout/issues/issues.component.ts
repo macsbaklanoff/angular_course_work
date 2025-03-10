@@ -7,6 +7,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {AsyncPipe} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
+import {CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
+import {IIssue} from '../../interfaces/issue.interface';
+import {Observable, of, toArray} from 'rxjs';
 
 
 @Component({
@@ -17,10 +20,13 @@ import {ActivatedRoute} from '@angular/router';
     MatTableModule,
     MatIcon,
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
+    CdkDropList,
+    CdkDrag,
+    CdkDragPlaceholder
   ],
   templateUrl: './issues.component.html',
-  styleUrl: './issues.component.scss'
+  styleUrl: 'issues.component.scss'
 })
 export class IssuesComponent implements OnInit {
 
@@ -28,10 +34,20 @@ export class IssuesComponent implements OnInit {
 
   public readonly projectId = input.required<string>();
 
+  public issues: IIssue[] = [];
+
   constructor() {
     effect(() => {
+      this.dataSource.$data.subscribe((data) => {
+        this.issues = [...data];
+      })
       this.dataSource._projectId.set(this.projectId());
+
     });
+  }
+
+  drop(event: CdkDragDrop<IIssue[]>) {
+    moveItemInArray(this.issues, event.previousIndex, event.currentIndex);
   }
 
   ngOnInit(): void {

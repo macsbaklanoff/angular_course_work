@@ -11,6 +11,8 @@ import {AsyncPipe} from '@angular/common';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {IIssue} from '../../interfaces/issue.interface';
+import {IProject} from '../../interfaces/project.interface';
+import {IssueService} from '../../services/issue.service';
 
 @Component({
   selector: 'app-project',
@@ -35,20 +37,12 @@ export class ProjectComponent {
 
   public displayedColumns: string[] = ['id', 'name', 'description'];
 
-  public test = signal<IIssue[]>([]);
-
-
   public code: string = "";
 
   public name: string = "";
 
   public description: string = "";
 
-  onCheckboxChange(item: any) {
-    if (item.selected) {
-      this.test.update(projectsIssues => [...projectsIssues, item]);
-    }
-  }
 
   public createProject(): void {
     const dialogRef = this._matDialogRef.open(CreateProjectDialogComponent)

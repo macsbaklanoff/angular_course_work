@@ -10,4 +10,5 @@ export interface IProject {
   description: string,
   issueCounter: number,
   audit: IAuditProject,
+  selected?: boolean,
 }
