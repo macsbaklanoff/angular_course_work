@@ -9,6 +9,12 @@ import {AsyncPipe, NgStyle} from '@angular/common';
 import {CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import {IIssue} from '../../interfaces/issue.interface';
 import {MatMenu, MatMenuItem, MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
+import {CreateProjectDialogComponent} from '../dialogs/create-project-dialog/create-project-dialog.component';
+import {IProjectRequest} from '../../interfaces/project-request.interface';
+import {MatDialog} from '@angular/material/dialog';
+import {ProjectService} from '../../services/project.service';
+import {IssueService} from '../../services/issue.service';
+import {IIssueRequest} from '../../interfaces/issue-request.interface';
 
 @Component({
   selector: 'app-issues',
@@ -30,6 +36,10 @@ import {MatMenu, MatMenuItem, MatMenuPanel, MatMenuTrigger} from '@angular/mater
   styleUrl: 'issues.component.scss'
 })
 export class IssuesComponent implements OnInit {
+
+  private readonly _matDialogRef = inject(MatDialog);
+
+  private _issueService = inject(IssueService);
 
   public dataSource = new IssueDataSource();
 
@@ -61,4 +71,20 @@ export class IssuesComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource._projectId.set(this.projectId());
   }
+
+  public createIssue(): void {
+    const dialogRef = this._matDialogRef.open(CreateProjectDialogComponent)
+
+    dialogRef.afterClosed().subscribe((request: IIssueRequest) => {
+      if (!request) return;
+
+      this._issueService.createIssue(request, this.projectId()).subscribe({
+        next: () => this.dataSource.refresh()
+      })
+
+      console.log('The dialog was closed');
+    });
+
+  }
+
 }

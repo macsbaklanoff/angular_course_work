@@ -1,3 +1,4 @@
+<button mat-flat-button (click)="createIssue()">Create Issue</button>
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
   @for (issue of issues; track issue.id) {
     <div class="example-box" cdkDrag>

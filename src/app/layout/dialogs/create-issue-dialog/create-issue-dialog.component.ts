@@ -16,12 +16,12 @@ import {toSignal} from '@angular/core/rxjs-interop';
     MatInput,
     MatLabel
   ],
-  templateUrl: './create-project-dialog.component.html',
-  styleUrl: './create-project-dialog.component.scss'
+  templateUrl: './create-issue-dialog.component.html',
+  styleUrl: './create-issue-dialog.component.scss'
 })
-export class CreateProjectDialogComponent {
+export class CreateIssueDialogComponent {
 
-  private readonly _dialogRef = inject(MatDialogRef<CreateProjectDialogComponent>);
+  private readonly _dialogRef = inject(MatDialogRef<CreateIssueDialogComponent>);
 
   public readonly isInvalidState: Signal<boolean> = computed(() => {
     return this.createFormStatusChange() != "VALID"

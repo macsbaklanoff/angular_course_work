@@ -9,6 +9,7 @@
   </div>
   <div class="project-component__view">
     <div class="project-component__view__projects">
+      <button mat-flat-button (click)="createProject()">Create Project</button>
       @for (project of dataSource.$data | async; track project.id) {
         <div class="project-component__view__projects__item" routerLink="{{ project.id }}">
           <p class="project-component__view__projects__item__name">{{ project.code }} - {{ project.name }}</p>
