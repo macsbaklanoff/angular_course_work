@@ -1,6 +1,12 @@
 $min-height: 100px;
 $border-radius: 20px;
 
+.issue-operation {
+  display: flex;
+  gap: 10px;
+}
+
+
 .example-list {
   display: grid;
   gap: 10px;

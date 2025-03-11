@@ -9,12 +9,16 @@ import {AsyncPipe, NgStyle} from '@angular/common';
 import {CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
 import {IIssue} from '../../interfaces/issue.interface';
 import {MatMenu, MatMenuItem, MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
-import {CreateProjectDialogComponent} from '../dialogs/create-project-dialog/create-project-dialog.component';
+import {CreateProjectDialogComponent} from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
 import {IProjectRequest} from '../../interfaces/project-request.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ProjectService} from '../../services/project.service';
 import {IssueService} from '../../services/issue.service';
 import {IIssueRequest} from '../../interfaces/issue-request.interface';
+import {UpdateIssueDialogComponent} from '../dialogs/issue-dialogs/update-issue-dialog/update-issue-dialog.component';
+import {IUpdateIssueRequest} from '../../interfaces/update-issue-request.interface';
+import {DeleteIssueDialogComponent} from '../dialogs/issue-dialogs/delete-issue-dialog/delete-issue-dialog.component';
+import {DeleteAllIssuesDialogComponent} from '../dialogs/issue-dialogs/delete-all-issues-dialog/delete-all-issues-dialog.component';
 
 @Component({
   selector: 'app-issues',
@@ -84,7 +88,40 @@ export class IssuesComponent implements OnInit {
 
       console.log('The dialog was closed');
     });
+  }
+  public updateIssue(issueId: string): void {
+    const dialogRef = this._matDialogRef.open(UpdateIssueDialogComponent)
 
+    dialogRef.afterClosed().subscribe((request: IUpdateIssueRequest) => {
+      if (!request) return;
+
+      this._issueService.updateIssue(request, this.projectId(), issueId).subscribe({
+        next: () => this.dataSource.refresh()
+      })
+      console.log('The dialog was closed');
+    });
+  }
+  public deleteIssue(issueId: string): void {
+    const dialogRef = this._matDialogRef.open(DeleteIssueDialogComponent)
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+      this._issueService.deleteIssue(this.projectId(), issueId).subscribe({
+        next: () => this.dataSource.refresh()
+      })
+      console.log('The dialog was closed');
+    });
   }
 
+  deleteAllIssues() {
+    const dialogRef = this._matDialogRef.open(DeleteAllIssuesDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+      this._issueService.deleteAllIssues(this.projectId()).subscribe({
+        next: () => this.dataSource.refresh()
+      })
+      console.log('The dialog was closed');
+    });
+  }
 }

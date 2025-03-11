@@ -19,9 +19,7 @@ export class IssueDataSource extends BaseDataSource<IIssue> {
       this.isInit.set(true);
     });
   }
-
-  protected override getData(): Observable<IIssue[]> {
+  public override getData(): Observable<IIssue[]> {
     return this._issueService.getIssues(this._projectId());
   }
-
 }

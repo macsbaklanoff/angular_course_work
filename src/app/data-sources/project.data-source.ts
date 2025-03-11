@@ -10,7 +10,7 @@ export class ProjectDataSource extends BaseDataSource<IProject> {
 
   private readonly _projectService = inject(ProjectService);
 
-  protected override getData(): Observable<IProject[]> {
+  public override getData(): Observable<IProject[]> {
     return this._projectService.getProjects();
   }
 }
