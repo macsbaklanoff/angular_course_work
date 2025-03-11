@@ -5,7 +5,7 @@ import {Component, Directive, effect, inject, Injector, signal} from '@angular/c
 import {toObservable} from '@angular/core/rxjs-interop';
 import {IssueService} from '../services/issue.service';
 
-export abstract class BaseDataSource<TDataType> extends DataSource<TDataType> {
+export abstract class BaseDataSource<TDataType> {
 
   private readonly _injector = inject(Injector);
 
@@ -18,7 +18,6 @@ export abstract class BaseDataSource<TDataType> extends DataSource<TDataType> {
   public readonly $data = this.connect();
 
   constructor(isReady: boolean = true) {
-    super();
 
     this.isInit.set(isReady);
 

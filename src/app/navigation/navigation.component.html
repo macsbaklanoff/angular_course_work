@@ -5,11 +5,11 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Projects</a>
-      <a mat-list-item href="#">Issues board</a>
-      <a mat-list-item href="#">Sign in</a>
-      <a mat-list-item href="#">Sign up</a>
-      <a mat-list-item href="#">Sign out</a>
+      <a mat-list-item routerLink="/projects">Projects</a>
+      <a mat-list-item routerLink="#">Issues board</a>
+      <a mat-list-item routerLink="/auth/login">Sign in</a>
+      <a mat-list-item routerLink="/auth/register">Sign up</a>
+      <a mat-list-item routerLink="#">Sign out</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
