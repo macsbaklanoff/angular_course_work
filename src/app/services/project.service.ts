@@ -1,13 +1,12 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IProject} from '../interfaces/project.interface';
-import {IProjectRequest} from '../interfaces/project-request.interface';
-import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
-import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
 import {IPageRequest} from '../interfaces/page-request.interface';
 import {ISortRequest} from '../interfaces/sort-request.interface';
-import {IProjectFilterRequest} from '../interfaces/project-filter-request.interface';
+import {IProjectFilterRequest} from '../interfaces/requests/project/project-filter-request.interface';
+import {IProjectRequest} from '../interfaces/requests/project/update-project-request.interface';
+import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
+import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,17 +36,17 @@ export class ProjectService {
     }
     return this._http.get<IPageResponse<IProjectResponse>>(this._apiPath, { params: params });
   }
-  public createProject(projectRequest: IProjectRequest): Observable<IProject> {
-    return this._http.post<IProject>(this._apiPath, JSON.stringify(projectRequest), {headers: this.headers});
+  public createProject(projectRequest: IProjectRequest): Observable<IProjectResponse> {
+    return this._http.post<IProjectResponse>(this._apiPath, JSON.stringify(projectRequest), {headers: this.headers});
   }
-  public updateProject(projectRequest: IProjectRequest, projectId: string): Observable<IProject[]> {
-    return this._http.put<IProject[]>(`${this._apiPath}/${[projectId]}`, JSON.stringify(projectRequest), {headers: this.headers});
+  public updateProject(projectRequest: IProjectRequest, projectId: string): Observable<IProjectResponse[]> {
+    return this._http.put<IProjectResponse[]>(`${this._apiPath}/${[projectId]}`, JSON.stringify(projectRequest), {headers: this.headers});
   }
-  public deleteProject(projectId: string): Observable<IProject[]> {
-    return this._http.delete<IProject[]>(`${this._apiPath}/${[projectId]}`);
+  public deleteProject(projectId: string): Observable<IProjectResponse[]> {
+    return this._http.delete<IProjectResponse[]>(`${this._apiPath}/${[projectId]}`);
   }
 
   public deleteAllProjects() {
-    return this._http.delete<IProject[]>(`${this._apiPath}/all`);
+    return this._http.delete<IProjectResponse[]>(`${this._apiPath}/all`);
   }
 }

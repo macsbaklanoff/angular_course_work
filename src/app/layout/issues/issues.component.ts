@@ -7,18 +7,17 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {AsyncPipe, NgStyle} from '@angular/common';
 import {CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDropList, moveItemInArray} from '@angular/cdk/drag-drop';
-import {IIssue} from '../../interfaces/issue.interface';
 import {MatMenu, MatMenuItem, MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
-import {CreateProjectDialogComponent} from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
-import {IProjectRequest} from '../../interfaces/project-request.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {ProjectService} from '../../services/project.service';
 import {IssueService} from '../../services/issue.service';
-import {IIssueRequest} from '../../interfaces/issue-request.interface';
-import {UpdateIssueDialogComponent} from '../dialogs/issue-dialogs/update-issue-dialog/update-issue-dialog.component';
-import {IUpdateIssueRequest} from '../../interfaces/update-issue-request.interface';
-import {DeleteIssueDialogComponent} from '../dialogs/issue-dialogs/delete-issue-dialog/delete-issue-dialog.component';
-import {DeleteAllIssuesDialogComponent} from '../dialogs/issue-dialogs/delete-all-issues-dialog/delete-all-issues-dialog.component';
+import {IIssueResponse} from '../../interfaces/responses/issue/issue.interface';
+import {
+  CreateProjectDialogComponent
+} from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
+import {IIssueRequest} from '../../interfaces/requests/issue/update-issue-request.interface';
+import {IIssueCreate} from '../../interfaces/requests/issue/issue-create-request.interface';
+import {CreateIssueDialogComponent} from '../dialogs/issue-dialogs/create-issue-dialog/create-issue-dialog.component';
 
 @Component({
   selector: 'app-issues',
@@ -49,7 +48,7 @@ export class IssuesComponent implements OnInit {
 
   public readonly projectId = input.required<string>();
 
-  public issues: IIssue[] = [];
+  public issues = signal<IIssueResponse[]>([]);
 
   public priorityColors: {[key: number]: string} = {
     0: '#DB4242', // Красный
@@ -59,17 +58,14 @@ export class IssuesComponent implements OnInit {
   };
 
   constructor() {
-    effect(() => {
-      this.dataSource.$data.subscribe((data) => {
-        this.issues = [...data];
-      })
-      this.dataSource._projectId.set(this.projectId());
-
+     effect(() => {
+       this.issues.set(this.dataSource.data());
+       this.dataSource._projectId.set(this.projectId());
     });
   }
 
-  drop(event: CdkDragDrop<IIssue[]>) {
-    moveItemInArray(this.issues, event.previousIndex, event.currentIndex);
+  drop(event: CdkDragDrop<IIssueResponse[]>) {
+    moveItemInArray(this.issues(), event.previousIndex, event.currentIndex);
   }
 
   ngOnInit(): void {
@@ -77,51 +73,52 @@ export class IssuesComponent implements OnInit {
   }
 
   public createIssue(): void {
-    const dialogRef = this._matDialogRef.open(CreateProjectDialogComponent)
+    const dialogRef = this._matDialogRef.open(CreateIssueDialogComponent)
 
-    dialogRef.afterClosed().subscribe((request: IIssueRequest) => {
+    dialogRef.afterClosed().subscribe((request: IIssueCreate) => {
       if (!request) return;
-
-      this._issueService.createIssue(request, this.projectId()).subscribe({
-        next: () => this.dataSource.refresh()
-      })
-
+      console.log(request);
       console.log('The dialog was closed');
+      this.dataSource.createIssue(request).subscribe({
+        next: () => {this.issues.set(this.dataSource.data())}
+      });
+      //this.issues.set(this.dataSource.data());
     });
   }
-  public updateIssue(issueId: string): void {
-    const dialogRef = this._matDialogRef.open(UpdateIssueDialogComponent)
-
-    dialogRef.afterClosed().subscribe((request: IUpdateIssueRequest) => {
-      if (!request) return;
-
-      this._issueService.updateIssue(request, this.projectId(), issueId).subscribe({
-        next: () => this.dataSource.refresh()
-      })
-      console.log('The dialog was closed');
-    });
-  }
-  public deleteIssue(issueId: string): void {
-    const dialogRef = this._matDialogRef.open(DeleteIssueDialogComponent)
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result) return;
-      this._issueService.deleteIssue(this.projectId(), issueId).subscribe({
-        next: () => this.dataSource.refresh()
-      })
-      console.log('The dialog was closed');
-    });
-  }
-
-  deleteAllIssues() {
-    const dialogRef = this._matDialogRef.open(DeleteAllIssuesDialogComponent);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (!result) return;
-      this._issueService.deleteAllIssues(this.projectId()).subscribe({
-        next: () => this.dataSource.refresh()
-      })
-      console.log('The dialog was closed');
-    });
-  }
+  // }
+  // public updateIssue(issueId: string): void {
+  //   const dialogRef = this._matDialogRef.open(UpdateIssueDialogComponent)
+  //
+  //   dialogRef.afterClosed().subscribe((request: IUpdateIssueRequest) => {
+  //     if (!request) return;
+  //
+  //     this._issueService.updateIssue(request, this.projectId(), issueId).subscribe({
+  //       next: () => this.dataSource.refresh()
+  //     })
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+  // public deleteIssue(issueId: string): void {
+  //   const dialogRef = this._matDialogRef.open(DeleteIssueDialogComponent)
+  //
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (!result) return;
+  //     this._issueService.deleteIssue(this.projectId(), issueId).subscribe({
+  //       next: () => this.dataSource.refresh()
+  //     })
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+  //
+  // deleteAllIssues() {
+  //   const dialogRef = this._matDialogRef.open(DeleteAllIssuesDialogComponent);
+  //
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (!result) return;
+  //     this._issueService.deleteAllIssues(this.projectId()).subscribe({
+  //       next: () => this.dataSource.refresh()
+  //     })
+  //     console.log('The dialog was closed');
+  //   });
+  // }
 }

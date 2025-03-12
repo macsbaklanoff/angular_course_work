@@ -4,7 +4,6 @@ import {MatTableModule} from '@angular/material/table';
 import {FormsModule} from '@angular/forms';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {ProjectService} from '../../services/project.service';
-import {IProjectRequest} from '../../interfaces/project-request.interface';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateProjectDialogComponent} from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
 import {AsyncPipe} from '@angular/common';

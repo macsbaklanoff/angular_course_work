@@ -3,7 +3,7 @@ import {ProjectService} from '../services/project.service';
 import {rxResource} from '@angular/core/rxjs-interop';
 import {IPageRequest} from '../interfaces/page-request.interface';
 import {ISortRequest} from '../interfaces/sort-request.interface';
-import {IProjectFilterRequest} from '../interfaces/project-filter-request.interface';
+import {IProjectFilterRequest} from '../interfaces/requests/project/project-filter-request.interface';
 import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
 
 export class ProjectDataSource {
@@ -33,8 +33,8 @@ export class ProjectDataSource {
   });
 
   public readonly data = computed<IProjectResponse[]>(() => {
-    return this._projectResource.value()?.items ?? []
-  })
+    return this._projectResource.value()?.items ?? [];
+  });
 
   public readonly isLoading = computed<boolean>(() => {
     return this._projectResource.isLoading();

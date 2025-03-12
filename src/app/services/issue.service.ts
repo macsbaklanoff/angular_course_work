@@ -1,11 +1,17 @@
 import {inject, Injectable} from '@angular/core';
-import {IIssue} from '../interfaces/issue.interface';
-import {delay, Observable, of} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {IProjectRequest} from '../interfaces/project-request.interface';
-import {IProject} from '../interfaces/project.interface';
-import {IIssueRequest} from '../interfaces/issue-request.interface';
-import {IUpdateIssueRequest} from '../interfaces/update-issue-request.interface';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {IIssueResponse} from '../interfaces/responses/issue/issue.interface';
+import {IIssueRequest} from '../interfaces/requests/issue/update-issue-request.interface';
+import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
+import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
+import {IPageRequest} from '../interfaces/page-request.interface';
+import {ISortRequest} from '../interfaces/sort-request.interface';
+import {IProjectFilterRequest} from '../interfaces/requests/project/project-filter-request.interface';
+import {IIssueCreate} from '../interfaces/requests/issue/issue-create-request.interface';
+
+class IUpdateIssueRequest {
+}
 
 @Injectable({
   providedIn: 'root'
@@ -16,20 +22,37 @@ export class IssueService {
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  public getIssues(projectId: string) : Observable<IIssue[]> {
-    console.log(`${this._apiPath}`+`${projectId}`);
-    return this._httpClient.get<IIssue[]>(`${this._apiPath}`+`${projectId}`);
+  public getIssues(projectId: string, pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IProjectFilterRequest) : Observable<IPageResponse<IIssueResponse>> {
+    // console.log(`${this._apiPath}`+`${projectId}`);
+    // return this._httpClient.get<IIssue[]>(`${this._apiPath}`+`${projectId}`);
+    let params = new HttpParams();
+
+    if (!!pageRequest) { //!! более надежный запрос для проверки сложных значений
+      params = params.append("pageNumber", pageRequest.pageNumber);
+      params = params.append("pageSize", pageRequest.pageSize);
+    }
+    if (!!sortRequest) {
+      params = params.append("sortBy", sortRequest.sortBy);
+      params = params.append("sortDir", sortRequest.sortDir);
+    }
+    if (!!filterRequest) {
+      if (!!filterRequest.searchTerm) {
+        params = params.append("searchTerm", filterRequest.searchTerm);
+      }
+    }
+    return this._httpClient.get<IPageResponse<IIssueResponse>>(`${this._apiPath}${projectId}`, { params: params });
   }
-  public createIssue(issueRequest: IIssueRequest, projectId: string): Observable<IIssue> {
-    return this._httpClient.post<IIssue>(`${this._apiPath}${projectId}`, JSON.stringify(issueRequest), {headers: this.headers});
+  public createIssue(projectId: string, issueRequest: IIssueCreate): Observable<IIssueResponse> {
+    let params = new HttpParams();
+    return this._httpClient.post<IIssueResponse>(`${this._apiPath}${projectId}`, JSON.stringify(issueRequest), {params: params});
   }
-  public updateIssue(updateIssueRequest: IUpdateIssueRequest, projectId: string, id: string): Observable<IIssue> {
-    return this._httpClient.put<IIssue>(`${this._apiPath}`+`${projectId}`+`/${id}`, JSON.stringify(updateIssueRequest), {headers: this.headers});
-  }
-  public deleteIssue(projectId: string, id: string): Observable<IIssue> {
-    return this._httpClient.delete<IIssue>(`${this._apiPath}`+`${projectId}`+`/${id}`);
-  }
-  public deleteAllIssues(projectId: string) {
-    return this._httpClient.delete<IIssue>(`${this._apiPath}`+`${projectId}/all`);
-  }
+  // public updateIssue(updateIssueRequest: IUpdateIssueRequest, projectId: string, id: string): Observable<IIssue> {
+  //   return this._httpClient.put<IIssue>(`${this._apiPath}`+`${projectId}`+`/${id}`, JSON.stringify(updateIssueRequest), {headers: this.headers});
+  // }
+  // public deleteIssue(projectId: string, id: string): Observable<IIssue> {
+  //   return this._httpClient.delete<IIssue>(`${this._apiPath}`+`${projectId}`+`/${id}`);
+  // }
+  // public deleteAllIssues(projectId: string) {
+  //   return this._httpClient.delete<IIssue>(`${this._apiPath}`+`${projectId}/all`);
+  // }
 }

@@ -1,11 +1,11 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ILoginRequest} from '../interfaces/login-request.interface';
-import {IRegisterRequest} from '../interfaces/register-request.interface';
-import {IRegisterResponse} from '../interfaces/register-response.interface';
-import {IAuthData} from '../interfaces/auth-data.interface';
-import {IAuthResponse} from '../interfaces/auth-response.interface';
+import {IAuthData} from '../interfaces/requests/auth/auth-data.interface';
+import {ILoginRequest} from '../interfaces/requests/auth/login/login-request.interface';
+import {IAuthResponse} from '../interfaces/responses/auth/auth-response.interface';
+import {IRegisterRequest} from '../interfaces/requests/auth/register/register-request.interface';
+import {IRegisterResponse} from '../interfaces/responses/auth/register-response.interface';
 
 @Injectable({
   providedIn: 'root'

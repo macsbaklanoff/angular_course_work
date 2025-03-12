@@ -28,21 +28,22 @@ export class CreateIssueDialogComponent {
   })
 
   public createForm: FormGroup = new FormGroup({
-    code: new FormControl<string>("", [Validators.required]),
     name: new FormControl<string>("", [Validators.required]),
-    description: new FormControl<string>("", []),
+    description: new FormControl<string>("", [Validators.required]),
+    priority: new FormControl<string>("", [Validators.required]),
   });
 
   public createFormStatusChange = toSignal(this.createForm.statusChanges)
 
-  public get code(): FormControl {
-    return this.createForm.controls['code'] as FormControl;
-  }
   public get name(): FormControl {
     return this.createForm.controls['name'] as FormControl;
   }
   public get description(): FormControl {
     return this.createForm.controls['description'] as FormControl;
+  }
+
+  public get priority(): FormControl {
+    return this.createForm.controls['priority'] as FormControl;
   }
 
   public onCreate(): void {
