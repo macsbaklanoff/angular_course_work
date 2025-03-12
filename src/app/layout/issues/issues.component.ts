@@ -77,12 +77,9 @@ export class IssuesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((request: IIssueCreate) => {
       if (!request) return;
-      console.log(request);
-      console.log('The dialog was closed');
       this.dataSource.createIssue(request).subscribe({
-        next: () => {this.issues.set(this.dataSource.data())}
+        next: () => {this.dataSource.data()}
       });
-      //this.issues.set(this.dataSource.data());
     });
   }
   // }

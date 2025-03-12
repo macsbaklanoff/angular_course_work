@@ -44,38 +44,11 @@ export class IssueDataSource {
     return this._issuesResource.value()?.items ?? [];
   });
 
-  // public readonly issue = computed<IIssueResponse>(() => {
-  //   return this._projectResource.value()
-  // })
   public readonly isLoading = computed<boolean>(() => {
     return this._issuesResource.isLoading();
   })
 
-  public issueCreate = signal<IIssueCreate>({});
-
-  // private readonly _issueResource = rxResource({
-  //   request: () => ({
-  //     pageRequest: this._pageRequest(),
-  //     sortRequest: this._sortRequest(),
-  //     filterRequest: this._filterRequest(),
-  //     projectId: this._projectId(),
-  //     issue: this.issueCreate()
-  //   }),
-  //   loader: ({request}) =>
-  //     this._issueService.createIssue(request.projectId, request.issue, request.pageRequest, request.sortRequest, request.filterRequest)
-  // });
-
-  // public readonly dataIssue = computed<IIssueResponse>(() => {
-  //   return this._issueResource.value()!;
-  // });
-  // public readonly dataIssue = computed<IIssueResponse>(() => {
-  //   return this._issueService.createIssue(this._projectId(), this.issueCreate()).subscribe();
-  // });
-
   public createIssue(request: IIssueCreate): Observable<IIssueResponse> {
-    this.issueCreate.set(request);
-    //return this.dataIssue();
     return this._issueService.createIssue(this._projectId(), request);
   }
-
 }

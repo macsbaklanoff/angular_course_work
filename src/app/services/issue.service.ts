@@ -40,6 +40,7 @@ export class IssueService {
         params = params.append("searchTerm", filterRequest.searchTerm);
       }
     }
+    console.log("getIssues");
     return this._httpClient.get<IPageResponse<IIssueResponse>>(`${this._apiPath}${projectId}`, { params: params });
   }
   public createIssue(projectId: string, issueRequest: IIssueCreate): Observable<IIssueResponse> {
