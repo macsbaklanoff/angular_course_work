@@ -83,7 +83,7 @@ export class IssuesComponent implements OnInit {
   }
 
   public search() {
-
+    this.load()
   }
 
   public sortDirAscending() {
@@ -114,7 +114,8 @@ export class IssuesComponent implements OnInit {
 
   public load() : void {
     this.dataSource.getIssues(this.projectId(), this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
-      next: (issues) => {this.issues.set(issues.items.filter((issue) => issue.name.includes(this.searchTerm)))}
+      next: (issues) => this.issues.set(issues.items.filter((issue) => issue.name.includes(this.searchTerm.toLowerCase()))),
+      error: () => console.log('error')
     })
   }
 

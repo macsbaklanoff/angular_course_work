@@ -11,7 +11,7 @@
     <div class="project-component__view__projects">
       <div class="project-component__view__projects__search">
         <input type="text" class="project-component__view__projects__search__input" [(ngModel)]="searchTerm">
-        <button mat-flat-button (click)="search()">Search</button>
+        <button mat-button (click)="search()"><mat-icon>search</mat-icon>Search</button>
       </div>
       <div class="project-component__view__projects__options">
         <button mat-flat-button (click)="createProject()">Create Project</button>
@@ -31,7 +31,10 @@
           <div class="project-component__view__projects__item__info">
             <p class="project-component__view__projects__item__name">{{ project.code }} - {{ project.name }}</p>
             <p class="project-component__view__projects__item__text">
-              Modified: {{ project.modifiedOn.getFullYear }}
+              Created: {{project.createdOn.split('.')[0].split('T')[0]}} {{project.createdOn.split('.')[0].split('T')[1]}}
+            </p>
+            <p class="project-component__view__projects__item__text">
+              Modified: {{project.modifiedOn.split('.')[0].split('T')[0]}} {{project.modifiedOn.split('.')[0].split('T')[1]}}
             </p>
           </div>
           <div class="project-component__view__projects__item__menu">

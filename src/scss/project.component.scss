@@ -17,12 +17,14 @@
     grid-template-columns: minmax(50px, 400px) 1fr;
     gap: 30px;
     &__projects {
+      display: grid;
+      grid-template-columns: 1fr;
       padding: 10px;
       background-color: var(--md-sys-surface);
       border-radius: 20px;
       &__search {
         display: grid;
-        grid-template-columns: 1fr 100px;
+        grid-template-columns: 1fr minmax(10px, 100px);
         gap: 16px;
         justify-content: space-between;
         &__input {
@@ -32,7 +34,7 @@
       }
       &__item {
         display: grid;
-        grid-template-columns: 1fr 40px;
+        grid-template-columns: minmax(10px, 1fr) 40px;
         min-height: 120px;
         padding: 5px;
         border: 1px solid #000000;
@@ -56,4 +58,27 @@
 p {
   margin: 0;
   padding: 5px;
+}
+@media (width < 890px) {
+  .project-component {
+    &__header {
+      display: none;
+    }
+    &__view {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  }
+}
+@media (width < 460px) {
+  .project-component {
+    &__view {
+      &__projects {
+        &__search {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
 }

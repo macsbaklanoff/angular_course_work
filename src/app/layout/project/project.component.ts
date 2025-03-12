@@ -80,7 +80,7 @@ export class ProjectComponent {
   public load() {
     this.dataSource.getProjects(this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
       next: (projects) => this.projects.set(projects.items.filter((project) =>
-        project.name.includes(this.searchTerm)))
+        project.name.includes(this.searchTerm.toLowerCase())))
     });
   }
 

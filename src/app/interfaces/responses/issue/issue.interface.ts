@@ -2,8 +2,8 @@ export interface IIssueResponse {
   id: string,
   name: string,
   code: string,
-  priority: number,
-  state: number,
+  priority: string,
+  state: string,
   createdOn: string,
   modifiedOn: string,
 }
