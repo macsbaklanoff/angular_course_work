@@ -30,8 +30,8 @@ export class UpdateIssueDialogComponent {
   public createForm: FormGroup = new FormGroup({
     name: new FormControl<string>("", [Validators.required]),
     description: new FormControl<string>("", [Validators.required]),
-    priority: new FormControl<number>(1, []),
-    state: new FormControl<number>(1, []),
+    priority: new FormControl<string>("", []),
+    state: new FormControl<string>("", []),
   });
 
   public createFormStatusChange = toSignal(this.createForm.statusChanges)

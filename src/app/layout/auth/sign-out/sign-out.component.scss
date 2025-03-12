@@ -7,7 +7,10 @@
   display: grid;
   place-items: center;
   align-items: center;
-  border: 1px #0c0e15 solid;
+  border: 1px var(--md-sys-on-primary-container) solid;
   border-radius: 22px;
-  padding: 50px;
+  padding: 24px;
+  &__buttons {
+    display: flex;
+  }
 }

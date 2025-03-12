@@ -1,11 +1,13 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {ProjectDataSource} from '../../data-sources/project.data-source';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule} from '@angular/forms';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {ProjectService} from '../../services/project.service';
 import {MatDialog} from '@angular/material/dialog';
-import {CreateProjectDialogComponent} from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
+import {
+  CreateProjectDialogComponent
+} from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
 import {AsyncPipe} from '@angular/common';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
@@ -16,6 +18,14 @@ import {
 import {
   DeleteProjectDialogComponent
 } from '../dialogs/project-dialogs/delete-project-dialog/delete-project-dialog.component';
+import {IProjectCreateRequest} from '../../interfaces/requests/project/project-create-request.interface';
+import {IPageRequest} from '../../interfaces/page-request.interface';
+import {ISortRequest} from '../../interfaces/sort-request.interface';
+import {IProjectFilterRequest} from '../../interfaces/requests/project/project-filter-request.interface';
+import {IIssueResponse} from '../../interfaces/responses/issue/issue.interface';
+import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
+import {IProjectUpdateRequest} from '../../interfaces/requests/project/update-project-request.interface';
+import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-project',
@@ -30,7 +40,8 @@ import {
     MatIconButton,
     MatMenu,
     MatMenuItem,
-    MatMenuTrigger
+    MatMenuTrigger,
+    MatInput
   ],
   templateUrl: './project.component.html',
   styleUrl: '../../../scss/project.component.scss'
@@ -42,71 +53,90 @@ export class ProjectComponent {
 
   private _projectService = inject(ProjectService);
 
-  public code: string = "";
+  private readonly _pageRequest = signal<IPageRequest>({
+    pageNumber: 1,
+    pageSize: 25,
+  });
 
-  public name: string = "";
+  private readonly _sortRequest = signal<ISortRequest>({
+    sortBy: 'updated',
+    sortDir: 'asc',
+  });
 
-  public description: string = "";
+  private readonly _filterRequest = signal<IProjectFilterRequest>({});
 
-  constructor(private router: Router) {}
+  public searchTerm: string = '';
 
-  // public createProject(): void {
-  //   const dialogRef = this._matDialogRef.open(CreateProjectDialogComponent)
-  //
-  //   dialogRef.afterClosed().subscribe((request: IProjectRequest) => {
-  //     if (!request) return;
-  //
-  //     this._projectService.createProject(request).subscribe({
-  //       next: () => this.dataSource.refresh()
-  //     })
-  //     console.log('The dialog was closed');
-  //   });
-  //
-  // }
-  //
-  // public updateProject(projectId: string) {
-  //   const dialogRef = this._matDialogRef.open(UpdateProjectDialogComponent)
-  //
-  //   dialogRef.afterClosed().subscribe((request: IProjectRequest) => {
-  //     if (!request) return;
-  //
-  //     this._projectService.updateProject(request, projectId).subscribe({
-  //       next: () => this.dataSource.refresh()
-  //     })
-  //
-  //     console.log('The dialog was closed');
-  //   });
-  // }
-  //
-  // public deleteProject(projectId: string) {
-  //   const dialogRef = this._matDialogRef.open(DeleteProjectDialogComponent)
-  //
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (!result) return;
-  //
-  //     this._projectService.deleteProject(projectId).subscribe({
-  //       next: () => this.dataSource.refresh()
-  //     })
-  //     this.dataSource.getData().subscribe({
-  //       next: (projects) => {
-  //         this.router.navigate([`/${projects[0].id}`]);
-  //       }
-  //     })
-  //     console.log('The dialog was closed');
-  //   });
-  // }
-  // public deleteAllProjects() {
-  //   const dialogRef = this._matDialogRef.open(DeleteProjectDialogComponent)
-  //
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (!result) return;
-  //     this._projectService.deleteAllProjects().subscribe({
-  //       next: () => {
-  //         this.dataSource.refresh()
-  //         this.router.navigate(['projects']);
-  //       }
-  //     })
-  //     console.log('The dialog was closed');
-  //   });
-  // }
+  public readonly projects = signal<IProjectResponse[]>([]);
+
+
+  constructor(private router: Router) {
+    this.load();
+  }
+  public search(): void {
+    this.load();
+  }
+
+  public load() {
+    this.dataSource.getProjects(this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
+      next: (projects) => this.projects.set(projects.items.filter((project) =>
+        project.name.includes(this.searchTerm)))
+    });
+  }
+
+  public sortDirAscending() {
+    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
+    this.load()
+  }
+  public sortDirDescending() {
+    this._sortRequest.set({sortBy: 'updated', sortDir: 'desc'});
+    this.load()
+  }
+  public sortByAscending() {
+    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
+    this.load()
+  }
+  public sortByDescending() {
+    this._sortRequest.set({sortBy: 'code', sortDir: 'asc'});
+    this.load()
+  }
+
+  public createProject(): void {
+    const dialogRef = this._matDialogRef.open(CreateProjectDialogComponent)
+
+    dialogRef.afterClosed().subscribe((request: IProjectCreateRequest) => {
+      if (!request) return;
+      this.dataSource.createProject(request).subscribe({
+        next: () => {
+          this.load()
+        }
+      })
+    });
+  }
+
+  public updateProject(projectId: string) {
+    const dialogRef = this._matDialogRef.open(UpdateProjectDialogComponent)
+
+    dialogRef.afterClosed().subscribe((request: IProjectUpdateRequest) => {
+      if (!request) return;
+      this.dataSource.updateProject(projectId, request).subscribe({
+        next: () => {
+          this.load()
+        }
+      });
+      console.log('The dialog was closed');
+    });
+  }
+  public deleteProject(projectId: string) {
+    const dialogRef = this._matDialogRef.open(DeleteProjectDialogComponent)
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+      this.dataSource.deleteProject(projectId).subscribe({
+        next: () => {
+          this.load()
+        }
+      });
+    });
+  }
 }

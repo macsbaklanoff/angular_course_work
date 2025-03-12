@@ -16,5 +16,5 @@
       <mat-error>Password is <strong>required</strong></mat-error>
     }
   </mat-form-field>
+  <button mat-button (click)="login()" [disabled]="isInvalidState()">Login</button>
 </form>
-<button mat-button (click)="login()" [disabled]="isInvalidState()">Login</button>

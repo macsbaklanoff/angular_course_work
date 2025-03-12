@@ -5,6 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,8 @@ import {AuthService} from '../../../services/auth.service';
 export class LoginComponent {
 
   private readonly _authService = inject(AuthService);
+
+  private readonly _router = inject(Router);
 
   public readonly isInvalidState: Signal<boolean> = computed(() => {
     return this.formStatusChange() != "VALID"
@@ -45,8 +48,9 @@ export class LoginComponent {
     if(this.isInvalidState()) return;
 
     this._authService.login(this.loginForm.value).subscribe({
-      next: result => {
-        this._authService.updateAuthData(result.accessToken);
+      next: () => {this._router.navigate(['projects'])},
+      error: error => {
+        console.log(error);
       }
     })
   }

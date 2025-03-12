@@ -21,7 +21,7 @@ services:
     ports:
       - "20101:27017"
   backend:
-    image: vordi/cm25-server:0.2.0
+    image: vordi/cm25-server:0.6.0
     container_name: backend
     environment:
       CM25SERVER_DATABASE: "mongodb://mongodb/cm25server?retryWrites=false"

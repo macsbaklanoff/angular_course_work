@@ -7,6 +7,16 @@ $border-radius: 20px;
 }
 
 
+.issue__search {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 16px;
+  justify-content: space-between;
+  &__input {
+    border-radius: 16px;
+    height: 24px;
+  }
+}
 .example-list {
   display: grid;
   gap: 10px;

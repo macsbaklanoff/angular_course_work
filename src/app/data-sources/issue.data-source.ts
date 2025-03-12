@@ -7,9 +7,10 @@ import {IProjectFilterRequest} from '../interfaces/requests/project/project-filt
 import {IIssueFilterRequest} from '../interfaces/requests/issue/issue-filter-request.interface';
 import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
 import {IIssueResponse} from '../interfaces/responses/issue/issue.interface';
-import {IIssueRequest} from '../interfaces/requests/issue/update-issue-request.interface';
+import {IIssueUpdateRequest} from '../interfaces/requests/issue/update-issue-request.interface';
 import {IIssueCreate} from '../interfaces/requests/issue/issue-create-request.interface';
 import {Observable} from 'rxjs';
+import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
 
 export class IssueDataSource {
 
@@ -29,26 +30,38 @@ export class IssueDataSource {
 
   public readonly _projectId = signal<string>('');
 
-  private readonly _issuesResource = rxResource({
-    request: () => ({
-      pageRequest: this._pageRequest(),
-      sortRequest: this._sortRequest(),
-      filterRequest: this._filterRequest(),
-      projectId: this._projectId(),
-    }),
-    loader: ({request}) =>
-      this._issueService.getIssues(request.projectId, request.pageRequest, request.sortRequest, request.filterRequest)
-  });
-
-  public readonly data = computed<IIssueResponse[]>(() => {
-    return this._issuesResource.value()?.items ?? [];
-  });
-
-  public readonly isLoading = computed<boolean>(() => {
-    return this._issuesResource.isLoading();
-  })
-
-  public createIssue(request: IIssueCreate): Observable<IIssueResponse> {
-    return this._issueService.createIssue(this._projectId(), request);
+  public getIssues(projectId: string, pageRequest: IPageRequest, sortRequest: ISortRequest, filterRequest: IIssueFilterRequest) {
+    return this._issueService.getIssues(projectId, pageRequest, sortRequest, filterRequest);
   }
+  public createIssue(projectId: string, issueRequest: IIssueCreate) {
+    return this._issueService.createIssue(projectId, issueRequest);
+  }
+  public updateIssue(projectId: string, id: string, issueRequest: IIssueUpdateRequest) {
+    return this._issueService.updateIssue(projectId, id, issueRequest);
+  }
+  public deleteIssue(projectId: string, id: string) {
+    return this._issueService.deleteIssue(projectId, id);
+  }
+  // private readonly _issuesResource = rxResource({
+  //   request: () => ({
+  //     pageRequest: this._pageRequest(),
+  //     sortRequest: this._sortRequest(),
+  //     filterRequest: this._filterRequest(),
+  //     projectId: this._projectId(),
+  //   }),
+  //   loader: ({request}) =>
+  //     this._issueService.getIssues(request.projectId, request.pageRequest, request.sortRequest, request.filterRequest)
+  // });
+
+  // public readonly data = computed<IIssueResponse[]>(() => {
+  //   return this._issuesResource.value()?.items ?? [];
+  // });
+  //
+  // public readonly isLoading = computed<boolean>(() => {
+  //   return this._issuesResource.isLoading();
+  // })
+  //
+  // public createIssue(request: IIssueCreate): Observable<IIssueResponse> {
+  //   return this._issueService.createIssue(this._projectId(), request);
+  // }
 }

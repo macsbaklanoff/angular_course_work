@@ -20,6 +20,16 @@
       padding: 10px;
       background-color: var(--md-sys-surface);
       border-radius: 20px;
+      &__search {
+        display: grid;
+        grid-template-columns: 1fr 100px;
+        gap: 16px;
+        justify-content: space-between;
+        &__input {
+          border-radius: 16px;
+          height: 24px;
+        }
+      }
       &__item {
         display: grid;
         grid-template-columns: 1fr 40px;

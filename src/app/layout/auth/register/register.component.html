@@ -23,5 +23,5 @@
       <mat-error>Username is <strong>required</strong></mat-error>
     }
   </mat-form-field>
+  <button mat-button (click)="register()" [disabled]="isInvalidState()">Register</button>
 </form>
-<button mat-button (click)="register()" [disabled]="isInvalidState()">Register</button>

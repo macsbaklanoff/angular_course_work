@@ -1,5 +1,6 @@
-export interface IIssueRequest {
-  code: string,
-  name: string,
-  description?: string,
+export interface IIssueUpdateRequest {
+  name: string;
+  description: string;
+  priority: string;
+  state: string;
 }

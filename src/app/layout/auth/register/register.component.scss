@@ -1,0 +1,13 @@
+:host {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+.test {
+  display: grid;
+  place-items: center;
+  align-items: center;
+  border: 1px var(--md-sys-on-primary-container) solid;
+  border-radius: 22px;
+  padding: 50px;
+}

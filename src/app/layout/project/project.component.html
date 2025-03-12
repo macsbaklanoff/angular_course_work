@@ -9,30 +9,45 @@
   </div>
   <div class="project-component__view">
     <div class="project-component__view__projects">
-<!--      <button mat-flat-button (click)="createProject()">Create Project</button>-->
-<!--      <button mat-flat-button (click)="deleteAllProjects()">Delete All Projects</button>-->
-      @for (project of dataSource.data(); track project.id) {
+      <div class="project-component__view__projects__search">
+        <input type="text" class="project-component__view__projects__search__input" [(ngModel)]="searchTerm">
+        <button mat-flat-button (click)="search()">Search</button>
+      </div>
+      <div class="project-component__view__projects__options">
+        <button mat-flat-button (click)="createProject()">Create Project</button>
+        <button mat-button [matMenuTriggerFor]="menu">SortDir</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="sortDirAscending()">Ascending</button>
+          <button mat-menu-item (click)="sortDirDescending()">Descending</button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="menu">SortBy</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="sortByAscending()">Updated</button>
+          <button mat-menu-item (click)="sortByDescending()">Descending</button>
+        </mat-menu>
+      </div>
+      @for (project of projects(); track project.id) {
         <div class="project-component__view__projects__item" routerLink="{{ project.id }}">
           <div class="project-component__view__projects__item__info">
-          <p class="project-component__view__projects__item__name">{{ project.code }} - {{ project.name }}</p>
-          <p class="project-component__view__projects__item__text">
-            Modified: {{ project.modifiedOn.getFullYear }}
-          </p>
+            <p class="project-component__view__projects__item__name">{{ project.code }} - {{ project.name }}</p>
+            <p class="project-component__view__projects__item__text">
+              Modified: {{ project.modifiedOn.getFullYear }}
+            </p>
           </div>
           <div class="project-component__view__projects__item__menu">
-<!--            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">-->
-<!--              <mat-icon>more_vert</mat-icon>-->
-<!--              <mat-menu #menu="matMenu">-->
-<!--                <button mat-menu-item (click)="updateProject(project.id)">-->
-<!--                  <mat-icon>arrow_upward</mat-icon>-->
-<!--                  <span>Update</span>-->
-<!--                </button>-->
-<!--                <button mat-menu-item (click)="deleteProject(project.id)">-->
-<!--                  <mat-icon>delete</mat-icon>-->
-<!--                  <span>Delete</span>-->
-<!--                </button>-->
-<!--              </mat-menu>-->
-<!--            </button>-->
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="updateProject(project.id)">
+                  <mat-icon>arrow_upward</mat-icon>
+                  <span>Update</span>
+                </button>
+                <button mat-menu-item (click)="deleteProject(project.id)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </button>
           </div>
         </div>
       }
