@@ -1,5 +1,70 @@
+@use "sass:map";
 @use 'theme-colors' as test_theme;
 @use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+$typography-map: (
+  "headline-nav-driver":("font-size": 20px,
+    "font-weight": 500,
+    "line-height": 20px,
+    "font-tracking": 0.1px,
+    //"color": var(--md-sys-color-on-surface-variant)),
+  ),
+  "label-text-nav-driver":("font-size": 14px,
+    "font-weight": 500,
+    "line-height": 20px,
+    "font-tracking": 0.1px,
+    //"color": var(--md-sys-color-on-secondary-container)),
+  ),
+  "badge-text-nav-driver":("font-size": 14px,
+    "font-weight": 500,
+    "line-height": 20px,
+    "font-tracking": 0.1px,
+    //"color": var(--md-sys-color-on-surface-variant)),
+  ),
+  "label-text-nav-rail":("font-size": 12px,
+    "font-weight": 500,
+    "line-height": 16px,
+    "font-tracking": .5px,
+    //"color": var(--md-sys-color-on-secondary-container)),
+  ),
+  "label-text-nav-bar":("font-size": 12px,
+    "font-weight": 500,
+    "line-height": 16px,
+    "font-tracking": .5px,
+    //"color": var(--md-sys-color-on-surface-variant)),
+  ),
+);
+
+@mixin _private-apply-text-style($font-style) {
+  $font-map: map.get($typography-map, $font-style);
+  font-size: map.get($font-map, "font-size");
+  font-weight: map.get($font-map, "font-weight");
+  line-height: map.get($font-map, "line-height");
+  font-tracking: map.get($font-map, "font-tracking");
+  color: map.get($font-map, "color");
+}
+
+@mixin typography-headline-style {
+  @include _private-apply-text-style("headline-nav-driver");
+}
+
+@mixin typography-label-style {
+  @include _private-apply-text-style("label-text-nav-driver");
+}
+
+@mixin typography-badge-style {
+  @include _private-apply-text-style("badge-text-nav-driver");
+}
+
+@mixin typography-label-style-rail {
+  @include _private-apply-text-style("label-text-nav-rail");
+}
+
+@mixin typography-label-style-bar {
+  @include _private-apply-text-style("label-text-nav-bar");
+}
 
 .sidenav-container {
   height: 100%;
@@ -7,6 +72,9 @@
 
 .sidenav {
   width: 200px;
+  &__text {
+    @include typography-headline-style;
+  }
 }
 
 .sidenav .mat-toolbar {
@@ -18,3 +86,54 @@
   top: 0;
   z-index: 1;
 }
+
+mat-nav-list {
+  padding-inline: 8px;
+}
+
+.mdc-list-item {
+  padding-inline: 0px;
+}
+
+.mat-toolbar-tablet {
+  display: grid;
+  place-items: center;
+  gap: 38px;
+}
+
+.nav-list-desktop {
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-inline: 8px;
+    &__text {
+      @include typography-label-style;
+    }
+  }
+}
+
+.nav-list-tablet {
+  padding: 0;
+  &__item {
+    display: grid;
+    place-items: center;
+
+    &__icon {
+      display: flex;
+      width: 56px;
+      justify-content: center;
+      align-items: center;
+    }
+    &__text {
+      padding-block: 4px;
+      @include typography-label-style-rail;
+    }
+  }
+}
+.nav-list-phone {
+  display: flex;
+  overflow-y: hidden;
+}
+
+

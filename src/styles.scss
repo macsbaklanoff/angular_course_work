@@ -53,16 +53,5 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: var(--md-sys-primary);
-
 }
 
-app-root {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-}
-
-@media (width < 600px) {
-  app-root {
-    grid-template-columns: 100px 1fr;
-  }
-}

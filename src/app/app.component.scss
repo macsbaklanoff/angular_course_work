@@ -1,4 +1,16 @@
-h2 {
-  padding: 5px;
-  margin: 0;
+:host {
+  display: grid;
+  grid-template-columns: 200px 1fr;
 }
+:host.mobile-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 62px;
+}
+@media (width < 900px) {
+  :host {
+    grid-template-columns: 84px 1fr;
+  }
+}
+
+
