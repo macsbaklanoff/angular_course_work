@@ -1,28 +1,32 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/projects">Projects <mat-icon>task_alt</mat-icon></a>
-      <a mat-list-item routerLink="/auth/login">Sign in <mat-icon>login</mat-icon></a>
-      <a mat-list-item routerLink="/auth/register">Sign up <mat-icon>how_to_reg</mat-icon></a>
-      <a mat-list-item routerLink="/auth/sign-out">Sign out <mat-icon>logout</mat-icon></a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      @if (isHandset$ | async) {
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-      }
-    </mat-toolbar>
 
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="navigation-driver">
+  <div class="navigation-driver__main">
+    <div class="navigation-driver__main__item-headline">
+      <span class="navigation-driver__main__item-headline__text">Mail</span>
+    </div>
+    <div class="navigation-driver__main__item-main">
+      <div class="navigation-driver__main__item-main__left">
+        <span class="navigation-driver__main__item-main__left__icon material-symbols-outlined">Inbox</span>
+        <span class="navigation-driver__main__item-main__left__text">Inbox</span>
+      </div>
+    </div>
+    <div class="navigation-driver__main__item-main">
+      <div class="navigation-driver__main__item-main__left">
+        <span class="navigation-driver__main__item-main__left__icon material-symbols-outlined">Send</span>
+        <span class="navigation-driver__main__item-main__left__text">Outbox</span>
+      </div>
+    </div>
+    <div class="navigation-driver__main__item-main">
+      <div class="navigation-driver__main__item-main__left">
+        <span class="navigation-driver__main__item-main__left__icon material-symbols-outlined">Favorite</span>
+        <span class="navigation-driver__main__item-main__left__text">Favorites</span>
+      </div>
+    </div>
+    <div class="navigation-driver__main__item-main">
+      <div class="navigation-driver__main__item-main__left">
+        <span class="navigation-driver__main__item-main__left__icon material-symbols-outlined">Delete</span>
+        <span class="navigation-driver__main__item-main__left__text">Trash</span>
+      </div>
+    </div>
+  </div>
+</div>

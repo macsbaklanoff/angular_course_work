@@ -1,20 +1,401 @@
-@use 'theme-colors' as test_theme;
-@use '@angular/material' as mat;
+@use "sass:map";
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-.sidenav-container {
+$breakpoint-tablet: 840px;
+$breakpoint-phone: 412px;
+$breakpoint-small: 188px;
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+.navigation-rail {
+  display: none;
+}
+
+
+$typography-map: (
+  "headline-nav-driver":("font-size": 14px,
+    "font-weight": 500,
+    "line-height": 20px,
+    "font-tracking": 0.1px,
+    "color": var(--md-sys-color-on-surface-variant)),
+  "label-text-nav-driver":("font-size": 14px,
+    "font-weight": 500,
+    "line-height": 20px,
+    "font-tracking": 0.1px,
+    "color": var(--md-sys-color-on-secondary-container)),
+  "badge-text-nav-driver":("font-size": 14px,
+    "font-weight": 500,
+    "line-height": 20px,
+    "font-tracking": 0.1px,
+    "color": var(--md-sys-color-on-surface-variant)),
+  "label-text-nav-rail":("font-size": 12px,
+    "font-weight": 500,
+    "line-height": 16px,
+    "font-tracking": .5px,
+    "color": var(--md-sys-color-on-secondary-container)),
+  "label-text-nav-bar":("font-size": 12px,
+    "font-weight": 500,
+    "line-height": 16px,
+    "font-tracking": .5px,
+    "color": var(--md-sys-color-on-surface-variant)),
+);
+
+@mixin _private-apply-text-style($font-style) {
+  $font-map: map.get($typography-map, $font-style);
+  font-size: map.get($font-map, "font-size");
+  font-weight: map.get($font-map, "font-weight");
+  line-height: map.get($font-map, "line-height");
+  font-tracking: map.get($font-map, "font-tracking");
+  color: map.get($font-map, "color");
+}
+
+@mixin typography-headline-style {
+  @include _private-apply-text-style("headline-nav-driver");
+}
+
+@mixin typography-label-style {
+  @include _private-apply-text-style("label-text-nav-driver");
+}
+
+@mixin typography-badge-style {
+  @include _private-apply-text-style("badge-text-nav-driver");
+}
+
+@mixin typography-label-style-rail {
+  @include _private-apply-text-style("label-text-nav-rail");
+}
+
+@mixin typography-label-style-bar {
+  @include _private-apply-text-style("label-text-nav-bar");
+}
+
+html,
+body {
+  margin: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: var(--md-sys-color-scrim);
+}
+
+:root {
+  --display-on-or-off-a-number: none;
+  //--_state_layer-display: none;
+  font-family: "Roboto", serif;
+  font-weight: 100;
+  font-style: normal;
+  overflow-x: hidden;
+
+
+  //light
+  --md-sys-color-surface-container-low-light: rgb(254, 247, 255);
+  --md-sys-color-on-surface-variant-light: rgb(73, 69, 79);
+  --md-sys-color-on-secondary-container-light: rgb(74, 68, 88);
+  --md-sys-color-on-secondary-container-light: rgb(73, 69, 79);
+  --md-sys-color-secondary-container-light: rgb(232, 222, 248);
+  --md-sys-color-on-surface-variant-light: rgb(73, 69, 79);
+  --md-sys-color-scrim-light: rgb(50, 47, 55);
+
+
+  //dark
+  --md-sys-color-surface-container-low-dark: rgb(20, 18, 24); //container
+  --md-sys-color-on-surface-variant-dark: rgb(202, 196, 208); //headline
+  --md-sys-color-on-secondary-container-dark: rgb(232, 222, 248); //label text
+  --md-sys-color-on-secondary-container-dark: rgb(202, 196, 208); //icon
+  --md-sys-color-secondary-container-dark: rgb(74, 68, 88); //active indicator
+  --md-sys-color-on-surface-variant-dark: rgb(202, 196, 208); //badge text
+  --md-sys-color-scrim-dark: rgb(50, 47, 55);
+
+  //light-dark
+  --md-sys-color-surface-container-low: light-dark(var(--md-sys-color-surface-container-low-light), var(--md-sys-color-surface-container-low-dark));
+  --md-sys-color-on-surface-variant: light-dark(var(--md-sys-color-on-surface-variant-light), var(--md-sys-color-on-surface-variant-dark));
+  --md-sys-color-on-secondary-container: light-dark(var(--md-sys-color-on-secondary-container-light), var(--md-sys-color-on-secondary-container-dark));
+  --md-sys-color-secondary-container: light-dark(var(--md-sys-color-secondary-container-light), var(--md-sys-color-secondary-container-dark));
+  --md-sys-color-badge-label-text: light-dark(var(--md-sys-color-on-surface-variant-light), var(--md-sys-color-on-surface-variant-dark));
+  --md-sys-color-scrim: light-dark(var(--md-sys-color-scrim-light), var(-md-sys-color-scrim-dark));
+
+
+
+  color-scheme: light dark;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: minmax(10px, 360px);
   height: 100%;
 }
 
-.sidenav {
-  width: 200px;
+.navigation-driver {
+  display: grid;
+  grid-template-columns: minmax(50px, 336px);
+  grid-template-rows: min-content;
+  height: 100%;
+  justify-content: center;
+  padding-block: 12px;
+  background-color: var(--md-sys-color-surface-container-low);
+  border-right: 1px #000 solid;
+
+  &__main {
+    display: grid;
+    grid-template-columns: minmax(50px, 1fr);
+    gap: 6px;
+
+    &__item-headline {
+      display: grid;
+      grid-template-columns: minmax(50px, 1fr);
+
+      color: var(--md-sys-color-on-surface-variant);
+
+      grid-template-rows: auto;
+      height: 56px;
+
+      &__text {
+        padding-block: 18px;
+        padding-inline: 16px;
+        @include typography-headline-style;
+      }
+    }
+
+
+    &__item-main {
+      display: flex;
+      justify-content: space-between;
+      height: 56px;
+      align-items: center;
+      padding-inline: 19px;
+      position: relative;
+      isolation: isolate;
+      color: var(--md-sys-color-on-secondary-container);
+      --_state_layer-display: none;
+      &:hover {
+        --_state_layer-display: block;
+        cursor: pointer;
+      }
+
+      &::after {
+        display: var(--_state_layer-display);
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: #4A4458;
+        opacity: .18;
+        z-index: -1;
+        border-radius: 26px;
+      }
+
+      &__left {
+        display: flex;
+        gap: 12px;
+
+        &__text {
+          margin-top: 3px;
+          @include typography-label-style;
+        }
+      }
+
+      &__right-number {
+        display: var(--display-on-or-off-a-number);
+        @include typography-badge-style;
+      }
+    }
+  }
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
+.item-active-nav-driver {
+  background-color: var(--md-sys-color-secondary-container);
+  --display-on-or-off-a-number: flex;
+  border-radius: 28px;
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 1,
+  }
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+
+.navigation-rail {
+  display: none;
+  grid-template-columns: 80px;
+  grid-auto-rows: min-content;
+  gap: 40px;
+  background-color: var(--md-sys-color-surface-container-low);
+
+  &__upper {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-auto-rows: min-content;
+    height: auto;
+    width: 100%;
+    place-items: center;
+    padding-top: 44px;
+
+    &__menu-icon {
+      display: flex;
+      width: 48px;
+      aspect-ratio: 1;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__edit-icon {
+      display: flex;
+      width: 56px;
+      aspect-ratio: 1;
+      justify-content: center;
+      align-items: center;
+      background-color: #FFD8E4;
+      border-radius: 16px;
+    }
+  }
+
+  &__lower {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-auto-rows: min-content;
+    height: auto;
+    width: 100%;
+
+    &__item {
+      display: grid;
+      place-items: center;
+
+      &__icon {
+        display: flex;
+        width: 56px;
+        height: 32px;
+        border-radius: 16px;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        isolation: isolate;
+        color: var(--md-sys-color-on-surface-variant);
+        &:hover {
+          --_state_layer-display: block;
+        }
+
+        &::after {
+          display: var(--_state_layer-display);
+          content: '';
+          inset: 0;
+          position: absolute;
+          background-color: var(--md-sys-color-secondary-container);
+          opacity: 1;
+          z-index: -1;
+          border-radius: 16px;
+        }
+      }
+
+      &__text {
+        padding-block: 4px;
+        color: var(--md-sys-color-on-surface-variant);
+        @include typography-label-style-rail;
+      }
+    }
+  }
+}
+
+.item-active-nav-rail {
+  .navigation-rail__lower__item {
+    &__icon {
+      background-color: var(--md-sys-color-secondary-container);
+      border-radius: 16px;
+      color: var(--md-sys-color-on-secondary-container);
+    }
+
+    &__text {
+      color: var(--md-sys-color-on-surface);
+    }
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 1,
+  }
+}
+
+.navigation-bar {
+  display: none;
+  grid-template-columns: repeat(3, 1fr);
+  height: 80px;
+  background-color: var(--md-sys-color-surface-container-low);
+  padding-inline: 8px;
+  column-gap: 8px;
+  place-items: center;
+
+  &__item {
+    display: grid;
+    grid-template-columns: minmax(50px, 126px);
+    grid-auto-rows: min-content;
+    place-items: center;
+    height: auto;
+    row-gap: 4px;
+
+    &__icon {
+      display: grid;
+      width: 64px;
+      height: 32px;
+      place-items: center;
+    }
+
+    &__text {
+      @include typography-label-style-bar;
+    }
+  }
+}
+
+.item-active-nav-bar {
+  .navigation-bar__item {
+    &__icon {
+      background-color: var(--md-sys-color-secondary-container);
+      border-radius: 16px;
+      color: var(--md-sys-color-on-secondary-container);
+    }
+
+    &__text {
+      color: var(--md-sys-color-on-surface);
+    }
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 1,
+  }
+}
+
+@media (width <=#{$breakpoint-tablet}) {
+  .navigation-driver {
+    display: none;
+  }
+
+  .navigation-rail {
+    display: grid;
+  }
+
+  .app {
+    grid-template-columns: minmax(50px, 80px);
+  }
+}
+
+@media (width <=#{$breakpoint-phone}) {
+  .navigation-driver {
+    display: none;
+  }
+
+  .navigation-rail {
+    display: none;
+  }
+
+  .navigation-bar {
+    display: grid;
+  }
+
+  .app {
+    grid-template-columns: minmax(50px, 412px);
+  }
 }
