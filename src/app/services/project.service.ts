@@ -43,10 +43,10 @@ export class ProjectService {
     return this._http.post<IProjectResponse>(this._apiPath, JSON.stringify(projectRequest), {headers: this.headers});
   }
   public updateProject(projectId: string, projectRequest: IProjectUpdateRequest): Observable<IProjectUpdateResponse> {
-    return this._http.put<IProjectUpdateResponse>(`${this._apiPath}/${[projectId]}`, JSON.stringify(projectRequest), {headers: this.headers});
+    return this._http.put<IProjectUpdateResponse>(`${this._apiPath}/${projectId}`, JSON.stringify(projectRequest), {headers: this.headers});
   }
   public deleteProject(projectId: string): Observable<IProjectDeleteResponse> {
-    return this._http.delete<IProjectDeleteResponse>(`${this._apiPath}/${[projectId]}`);
+    return this._http.delete<IProjectDeleteResponse>(`${this._apiPath}/${projectId}`);
   }
   //
   // public deleteAllProjects() {

@@ -1,21 +1,33 @@
 @use 'theme-colors' as test_theme;
 @use '@angular/material' as mat;
 
+.project-component__view__projects > *:not(:first-child) {
+  padding: 10px;
+}
+
 .project-component {
   display: grid;
   padding-inline: 50px;
-  &__header {
-    display: grid;
-  }
   &__view {
     display: grid;
     gap: 30px;
     &__projects {
       display: grid;
       grid-template-columns: 1fr;
-      padding: 10px;
+
       background-color: var(--md-sys-surface);
       border-radius: 20px;
+      &__header {
+        display: grid;
+        align-items: center;
+        height: 32px;
+        background-color: var(--md-sys-secondary);
+        color: var(--md-sys-on-surface);
+        border-radius: 20px 20px 0px 0px;
+        padding: 10px;
+        font-size: 18px;
+      }
+
       &__search {
         display: grid;
         grid-template-columns: 1fr minmax(10px, 100px);
