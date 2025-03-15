@@ -132,8 +132,27 @@ mat-nav-list {
   }
 }
 .nav-list-phone {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   overflow-y: hidden;
+  &__item {
+    display: grid;
+    grid-template-columns: minmax(50px, 126px);
+    grid-auto-rows: min-content;
+    place-items: center;
+    height: auto;
+
+    &__icon {
+      display: grid;
+      width: 64px;
+      height: 32px;
+      place-items: center;
+    }
+
+    &__text {
+      @include typography-label-style-bar;
+    }
+  }
 }
 
 

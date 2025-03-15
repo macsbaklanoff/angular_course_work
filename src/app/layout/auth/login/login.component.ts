@@ -48,7 +48,6 @@ export class LoginComponent {
     if(this.isInvalidState()) return;
 
     this._authService.login(this.loginForm.value).subscribe({
-      next: () => {this._router.navigate(['projects'])},
       error: error => {
         console.log(error);
       }

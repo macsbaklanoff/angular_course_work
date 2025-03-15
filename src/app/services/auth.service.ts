@@ -5,7 +5,6 @@ import {IAuthData} from '../interfaces/requests/auth/auth-data.interface';
 import {ILoginRequest} from '../interfaces/requests/auth/login/login-request.interface';
 import {IAuthResponse} from '../interfaces/responses/auth/auth-response.interface';
 import {IRegisterRequest} from '../interfaces/requests/auth/register/register-request.interface';
-import {IRegisterResponse} from '../interfaces/responses/auth/register-response.interface';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
@@ -13,7 +12,7 @@ import {Router} from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly _router = Inject(Router);
+  // private readonly _router = Inject(Router);
 
   private readonly _http = inject(HttpClient);
 
@@ -46,7 +45,13 @@ export class AuthService {
     return this._accessToken();
   })
 
-  constructor() {
+  constructor(private _router: Router) {
+    if (!this.isAuthorized()) {
+      this._router.navigate(['auth', 'sign-in']);
+    }
+    else {
+      this._router.navigate(['projects']);
+    }
     effect(() => {
       localStorage.setItem('accessToken', this.accessToken());
     });
@@ -56,11 +61,24 @@ export class AuthService {
     return this._http.post<IAuthResponse>(`${this._apiPath}/sign-in`, JSON.stringify(loginRequest), {headers: this.headers}).pipe(
       map(authResponse => {
         this._accessToken.set(authResponse.accessToken);
-        this._router.navigate(['projects']).then(() => {});
+        this._router.navigate(['projects']).then(() => {
+        });
       })
     );
   }
-  public register(registerRequest: IRegisterRequest): Observable<IRegisterResponse> {
-    return this._http.post<IRegisterResponse>(`${this._apiPath}/sign-up`, JSON.stringify(registerRequest), {headers: this.headers});
+
+  public register(registerRequest: IRegisterRequest): Observable<void> {
+    return this._http.post<IAuthResponse>(`${this._apiPath}/sign-up`, JSON.stringify(registerRequest), {headers: this.headers}).pipe(
+      map(authResponse => {
+        this._accessToken.set(authResponse.accessToken);
+        this._router.navigate(['projects']).then(() => {
+        });
+      }));
+  }
+
+  public signOut() {
+    this._accessToken.set('');
+    this._router.navigate(['auth', 'sign-in']).then(() => {
+    });
   }
 }

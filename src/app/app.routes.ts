@@ -20,15 +20,16 @@ export const routes: Routes = [
     path: 'auth',
     children: [
       {
-        path: 'login',
+        path: 'sign-in',
         component: LoginComponent
       },
       {
-        path: 'register',
+        path: 'sign-up',
         component: RegisterComponent
       },
       {
         path: 'sign-out',
+        canActivate: [authGuard],
         component: SignOutComponent
       },
     ]

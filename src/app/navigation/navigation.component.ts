@@ -28,11 +28,6 @@ import {RouterLink} from '@angular/router';
 export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
 
-  // isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  //   .pipe(
-  //     map(result => result.matches),
-  //     shareReplay()
-  //   );
   isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 900px)')
     .pipe(
       map(result => result.matches),

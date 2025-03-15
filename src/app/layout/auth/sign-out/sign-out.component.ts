@@ -19,8 +19,7 @@ export class SignOutComponent {
   private readonly _authService = inject(AuthService);
 
   public signOut() {
-    localStorage.removeItem('accessToken');
-    this._router.navigate(['auth', 'login']);
+    this._authService.signOut();
   }
   public cancel() {
     this._router.navigate(['projects'])
