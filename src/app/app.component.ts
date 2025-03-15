@@ -21,18 +21,18 @@ import {AsyncPipe} from '@angular/common';
 export class AppComponent {
   title = 'angular_course_work';
   public authService = inject(AuthService);
-  private breakpointObserver = inject(BreakpointObserver);
+  //private breakpointObserver = inject(BreakpointObserver);
 
-  constructor() {
-    this.isPhone$.subscribe(isPhone => {this.isMobileLayout = isPhone})
-  }
+  // constructor() {
+  //   this.isPhone$.subscribe(isPhone => {this.isMobileLayout = isPhone})
+  // }
 
-  @HostBinding('class.mobile-layout') isMobileLayout = false;
-  public isPhone$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 400px)')
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    )
+  // @HostBinding('class.mobile-layout') isMobileLayout = false;
+  // public isPhone$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 400px)')
+  //   .pipe(
+  //     map(result => result.matches),
+  //     shareReplay()
+  //   )
 
 }
 
