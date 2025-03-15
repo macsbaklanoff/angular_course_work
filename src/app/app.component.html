@@ -1,17 +1,20 @@
 @if (isPhone$ | async) {
-  <div class="app-phone">
+  <div class="nav">
+    <app-navigation></app-navigation>
+  </div>
+  <div class="header">header</div>
+  <div class="content">
     @if (authService.isAuthorized()) {
       <h2>Hello, {{ authService.authData()?.name }}! Welcome CM25Issues</h2>
     }
     <router-outlet/>
   </div>
-  <app-navigation></app-navigation>
 } @else {
-<!--  <div class="header">header</div>-->
   <div class="nav">
     <app-navigation></app-navigation>
   </div>
-  <div>
+  <div class="header">header</div>
+  <div class="content">
     @if (authService.isAuthorized()) {
       <h2>Hello, {{ authService.authData()?.name }}! Welcome CM25Issues</h2>
     }

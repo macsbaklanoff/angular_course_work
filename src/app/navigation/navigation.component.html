@@ -36,32 +36,31 @@
       @if (isPhone$ | async) {
         <mat-nav-list [ngClass]="{'nav-list-phone': isPhone$ | async}">
           <a mat-list-item routerLink="/projects">
-        <span class="nav-list-phone__item">
-          <mat-icon class="nav-list-phone__item__icon">home</mat-icon>
-<!--          <span class="nav-list-phone__item__text">Projects</span>-->
-        </span>
+            <span class="nav-list-phone__item">
+              <mat-icon class="nav-list-phone__item__icon">home</mat-icon>
+<!--              <span class="nav-list-phone__item__text">Projects</span>-->
+            </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-in">
-        <span class="nav-list-phone__item">
-          <mat-icon class="nav-list-phone__item__icon">logout</mat-icon>
-<!--          <span class="nav-list-phone__item__text">Sign-in</span>-->
-        </span>
+            <span class="nav-list-phone__item">
+              <mat-icon class="nav-list-phone__item__icon">logout</mat-icon>
+<!--              <span class="nav-list-phone__item__text">Sign-in</span>-->
+            </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-up">
-        <span class="nav-list-phone__item">
-          <mat-icon class="nav-list-phone__item__icon">how_to_reg</mat-icon>
-<!--          <span class="nav-list-phone__item__text">Sign-up</span>-->
-        </span>
+            <span class="nav-list-phone__item">
+              <mat-icon class="nav-list-phone__item__icon">how_to_reg</mat-icon>
+<!--              <span class="nav-list-phone__item__text">Sign-up</span>-->
+            </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-out">
-        <span class="nav-list-phone__item">
-          <mat-icon class="nav-list-phone__item__icon">logout</mat-icon>
-<!--          <span class="nav-list-phone__item__text">Sign-out</span>-->
-        </span>
+            <span class="nav-list-phone__item">
+              <mat-icon class="nav-list-phone__item__icon">logout</mat-icon>
+<!--              <span class="nav-list-phone__item__text">Sign-out</span>-->
+            </span>
           </a>
         </mat-nav-list>
-      }
-       @else if (isHandset$ | async) {
+      } @else if (isHandset$ | async) {
         <button
           type="button"
           aria-label="Toggle sidenav"
