@@ -26,6 +26,8 @@ import {IIssueResponse} from '../../interfaces/responses/issue/issue.interface';
 import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
 import {IProjectUpdateRequest} from '../../interfaces/requests/project/update-project-request.interface';
 import {MatInput} from '@angular/material/input';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {IPageResponse} from '../../interfaces/responses/project/page-response.interface';
 
 @Component({
   selector: 'app-project',
@@ -41,7 +43,8 @@ import {MatInput} from '@angular/material/input';
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
-    MatInput
+    MatInput,
+    MatPaginator
   ],
   templateUrl: './project.component.html',
   styleUrl: '../../../scss/project.component.scss'
@@ -69,12 +72,18 @@ export class ProjectComponent {
 
   public readonly projects = signal<IProjectResponse[]>([]);
 
+  public test: IProjectResponse[] = []
+
 
   constructor(private router: Router) {
     this.load();
+    this.dataSource.getData().subscribe({
+      next: data => {this.test = data.items}
+    })
   }
   public search(): void {
-    this.load();
+    //this.load();
+    
   }
 
   public load() {
@@ -82,6 +91,7 @@ export class ProjectComponent {
       next: (projects) => this.projects.set(projects.items.filter((project) =>
         project.name.includes(this.searchTerm.toLowerCase())))
     });
+    console.log(this.projects());
   }
 
   public sortDirAscending() {
@@ -138,5 +148,13 @@ export class ProjectComponent {
         }
       });
     });
+  }
+
+  public onPageChange($event: PageEvent) {
+    this._pageRequest.set({
+      pageSize: $event.pageSize,
+      pageNumber: $event.pageIndex,
+    })
+    this.load()
   }
 }

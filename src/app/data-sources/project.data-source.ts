@@ -8,10 +8,17 @@ import {IProjectResponse} from '../interfaces/responses/project/project-response
 import {IIssueFilterRequest} from '../interfaces/requests/issue/issue-filter-request.interface';
 import {IProjectCreateRequest} from '../interfaces/requests/project/project-create-request.interface';
 import {IProjectUpdateRequest} from '../interfaces/requests/project/update-project-request.interface';
+import {BaseDataSource} from './base.data-source';
+import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
+import { Observable } from 'rxjs';
 
-export class ProjectDataSource {
+export class ProjectDataSource extends BaseDataSource<IProjectResponse> {
 
   private readonly _projectService = inject(ProjectService);
+
+  public override getData(): Observable<IPageResponse<IProjectResponse>> {
+    return this._projectService.getProjects();
+  }
 
   public getProjects(pageRequest: IPageRequest, sortRequest: ISortRequest, filterRequest: IIssueFilterRequest) {
     return this._projectService.getProjects(pageRequest, sortRequest, filterRequest);

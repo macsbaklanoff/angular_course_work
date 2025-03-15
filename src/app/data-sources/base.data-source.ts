@@ -1,11 +1,11 @@
-import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {IIssue} from '../interfaces/issue.interface';
 import {Observable, of} from 'rxjs';
 import {Component, Directive, effect, inject, Injector, signal} from '@angular/core';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {IssueService} from '../services/issue.service';
+import {DataSource} from '@angular/cdk/collections';
+import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
 
-export abstract class BaseDataSource<TDataType> {
+export abstract class BaseDataSource<TDataType> extends DataSource<TDataType>{
 
   private readonly _injector = inject(Injector);
 
@@ -18,7 +18,7 @@ export abstract class BaseDataSource<TDataType> {
   public readonly $data = this.connect();
 
   constructor(isReady: boolean = true) {
-
+    super()
     this.isInit.set(isReady);
 
     effect(() => {
@@ -43,11 +43,11 @@ export abstract class BaseDataSource<TDataType> {
   private load(): void {
     this.isLoading.set(true);
     this.getData().subscribe({
-      next: data => this._data.set(data),
+      next: data => this._data.set(data.items),
       error: error => console.log(error),
       complete: () => {this.isLoading.set(false);}
     })
   }
 
-  protected abstract getData(): Observable<TDataType[]>;
+  protected abstract getData(): Observable<IPageResponse<TDataType>>;
 }
