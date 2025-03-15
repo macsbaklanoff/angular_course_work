@@ -27,7 +27,6 @@ html {
   --md-sys-on-secondary: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 100)}; // Контрастный текст на secondary
   --md-sys-secondary-container: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 90)}; // Контейнер для secondary
   --md-sys-on-secondary-container: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 10)}; // Текст на secondary container
-
   // Tertiary Colors
   --md-sys-tertiary: #{mat.m2-get-color-from-palette(test_theme.$tertiary-palette, 40)}; // Третичный цвет
   --md-sys-on-tertiary: #{mat.m2-get-color-from-palette(test_theme.$tertiary-palette, 100)}; // Контрастный текст на tertiary

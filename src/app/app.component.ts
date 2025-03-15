@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {AsyncPipe} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
 @Component({
   selector: 'app-root',
   imports: [
@@ -14,6 +15,7 @@ import {AsyncPipe} from '@angular/common';
     NavigationComponent,
     MatButton,
     AsyncPipe,
+    MatIcon,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -21,18 +23,6 @@ import {AsyncPipe} from '@angular/common';
 export class AppComponent {
   title = 'angular_course_work';
   public authService = inject(AuthService);
-  //private breakpointObserver = inject(BreakpointObserver);
-
-  // constructor() {
-  //   this.isPhone$.subscribe(isPhone => {this.isMobileLayout = isPhone})
-  // }
-
-  // @HostBinding('class.mobile-layout') isMobileLayout = false;
-  // public isPhone$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 400px)')
-  //   .pipe(
-  //     map(result => result.matches),
-  //     shareReplay()
-  //   )
 
 }
 
