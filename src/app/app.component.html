@@ -6,7 +6,11 @@
   <div class="header__account">
     @if (authService.isAuthorized()) {
       <mat-icon>account_circle</mat-icon>
-      <span>{{authService.authData()?.name}}</span>
+      <span>{{ authService.authData()?.name }}</span>
+    } @else {
+      <span class="material-symbols-outlined">
+        account_circle_off
+      </span>
     }
   </div>
 </div>

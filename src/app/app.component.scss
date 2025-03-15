@@ -1,5 +1,6 @@
 :host {
   display: grid;
+  row-gap: 64px;
   grid-template-columns: [navigation-start] 200px [navigation-end main-start] 1fr [main-end];
   grid-template-rows: [navigation-start header-start] min-content [header-end content-start]
   1fr [content-end];
@@ -10,11 +11,11 @@
 }
 .header {
   display: flex;
+  padding-inline: 50px;
   align-items: center;
   justify-content: space-between;
   padding-right: 50px;
   background-color: var(--md-sys-secondary);
-  width: 100%;
   min-height: 64px;
   height: auto;
   grid-column: main;
@@ -26,7 +27,6 @@
   }
   &__account {
     display: flex;
-    margin-right: 50px;
   }
 }
 .content {

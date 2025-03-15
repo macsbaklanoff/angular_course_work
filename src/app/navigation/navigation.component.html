@@ -5,15 +5,23 @@
                [opened]="(isHandset$ | async) === false">
     <mat-toolbar class="sidenav__text">Menu</mat-toolbar>
     <mat-nav-list>
+      <span class="nav-list-desktop__item__text">Main</span>
       <a mat-list-item routerLink="/projects">
         <span class="nav-list-desktop__item">
           <mat-icon>home</mat-icon>
           <span class="nav-list-desktop__item__text">Projects</span>
         </span>
       </a>
+      <a mat-list-item routerLink="/issues">
+        <span class="nav-list-desktop__item">
+          <mat-icon>sync_problem</mat-icon>
+          <span class="nav-list-desktop__item__text">Issues</span>
+        </span>
+      </a>
+      <span class="nav-list-desktop__item__text">Account</span>
       <a mat-list-item routerLink="/auth/sign-in">
         <span class="nav-list-desktop__item">
-          <mat-icon>logout</mat-icon>
+          <mat-icon>login</mat-icon>
           <span class="nav-list-desktop__item__text">Sign-in</span>
         </span>
       </a>
@@ -38,25 +46,25 @@
           <a mat-list-item routerLink="/projects">
             <span class="nav-list-phone__item">
               <mat-icon class="nav-list-phone__item__icon">home</mat-icon>
-<!--              <span class="nav-list-phone__item__text">Projects</span>-->
+              <!--              <span class="nav-list-phone__item__text">Projects</span>-->
             </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-in">
             <span class="nav-list-phone__item">
-              <mat-icon class="nav-list-phone__item__icon">logout</mat-icon>
-<!--              <span class="nav-list-phone__item__text">Sign-in</span>-->
+              <mat-icon class="nav-list-phone__item__icon">login</mat-icon>
+              <!--              <span class="nav-list-phone__item__text">Sign-in</span>-->
             </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-up">
             <span class="nav-list-phone__item">
               <mat-icon class="nav-list-phone__item__icon">how_to_reg</mat-icon>
-<!--              <span class="nav-list-phone__item__text">Sign-up</span>-->
+              <!--              <span class="nav-list-phone__item__text">Sign-up</span>-->
             </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-out">
             <span class="nav-list-phone__item">
               <mat-icon class="nav-list-phone__item__icon">logout</mat-icon>
-<!--              <span class="nav-list-phone__item__text">Sign-out</span>-->
+              <!--              <span class="nav-list-phone__item__text">Sign-out</span>-->
             </span>
           </a>
         </mat-nav-list>
@@ -70,28 +78,34 @@
         </button>
         <mat-nav-list [ngClass]="{'nav-list-tablet': isHandset$ | async}">
           <a mat-list-item routerLink="/projects">
-        <span class="nav-list-tablet__item">
-          <mat-icon class="nav-list-tablet__item__icon">home</mat-icon>
-          <span class="nav-list-tablet__item__text">Projects</span>
-        </span>
+            <span class="nav-list-tablet__item">
+            <mat-icon class="nav-list-tablet__item__icon">home</mat-icon>
+            <span class="nav-list-tablet__item__text">Projects</span>
+            </span>
+          </a>
+          <a mat-list-item routerLink="/issues">
+            <span class="nav-list-tablet__item">
+              <mat-icon>sync_problem</mat-icon>
+              <span class="nav-list-tablet__item__text">Issues</span>
+            </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-in">
-        <span class="nav-list-tablet__item">
-          <mat-icon class="nav-list-tablet__item__icon">logout</mat-icon>
-          <span class="nav-list-tablet__item__text">Sign-in</span>
-        </span>
+            <span class="nav-list-tablet__item">
+              <mat-icon class="nav-list-tablet__item__icon">login</mat-icon>
+              <span class="nav-list-tablet__item__text">Sign-in</span>
+            </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-up">
-        <span class="nav-list-tablet__item">
-          <mat-icon class="nav-list-tablet__item__icon">how_to_reg</mat-icon>
-          <span class="nav-list-tablet__item__text">Sign-up</span>
-        </span>
+            <span class="nav-list-tablet__item">
+              <mat-icon class="nav-list-tablet__item__icon">how_to_reg</mat-icon>
+              <span class="nav-list-tablet__item__text">Sign-up</span>
+            </span>
           </a>
           <a mat-list-item routerLink="/auth/sign-out">
-        <span class="nav-list-tablet__item">
-          <mat-icon class="nav-list-tablet__item__icon">logout</mat-icon>
-          <span class="nav-list-tablet__item__text">Sign-out</span>
-        </span>
+            <span class="nav-list-tablet__item">
+              <mat-icon class="nav-list-tablet__item__icon">logout</mat-icon>
+              <span class="nav-list-tablet__item__text">Sign-out</span>
+            </span>
           </a>
         </mat-nav-list>
       }

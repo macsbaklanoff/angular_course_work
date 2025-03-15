@@ -11,10 +11,11 @@ export const routes: Routes = [
     path: 'projects',
     component: ProjectComponent,
     canActivate: [authGuard],
-    children: [{
-      path: ':projectId',
-      component: IssuesComponent
-    }]
+  },
+  {
+    path: 'issues',
+    component: IssuesComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'auth',

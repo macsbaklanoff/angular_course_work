@@ -1,14 +1,9 @@
 <div class="project-component">
-  <div class="project-component__header">
-    <div class="project-component__header__left">
-      <h3 class="project-component__header__item">Projects</h3>
-    </div>
-    <div class="project-component__header__item">
-      <h3 class="project-component__header__text">Issues</h3>
-    </div>
-  </div>
   <div class="project-component__view">
     <div class="project-component__view__projects">
+      <div class="project-component__view__projects__header">
+        <h4>Projects</h4>
+      </div>
       <div class="project-component__view__projects__search">
         <input type="text" class="project-component__view__projects__search__input" [(ngModel)]="searchTerm">
         <button mat-button (click)="search()"><mat-icon>search</mat-icon>Search</button>
@@ -26,18 +21,19 @@
           <button mat-menu-item (click)="sortByDescending()">Descending</button>
         </mat-menu>
       </div>
+      <div class="project-component__view__projects__content">
       @for (project of projects(); track project.id) {
-        <div class="project-component__view__projects__item" routerLink="{{ project.id }}">
-          <div class="project-component__view__projects__item__info">
-            <p class="project-component__view__projects__item__name">{{ project.code }} - {{ project.name }}</p>
-            <p class="project-component__view__projects__item__text">
+        <div class="project-component__view__projects__content__item" routerLink="{{ project.id }}">
+          <div class="project-component__view__projects__content__item__info">
+            <p class="project-component__view__projects__content__item__name">{{ project.code }} - {{ project.name }}</p>
+            <p class="project-component__view__projects__content__item__text">
               Created: {{project.createdOn.split('.')[0].split('T')[0]}} {{project.createdOn.split('.')[0].split('T')[1]}}
             </p>
-            <p class="project-component__view__projects__item__text">
+            <p class="project-component__view__projects__content__item__text">
               Modified: {{project.modifiedOn.split('.')[0].split('T')[0]}} {{project.modifiedOn.split('.')[0].split('T')[1]}}
             </p>
           </div>
-          <div class="project-component__view__projects__item__menu">
+          <div class="project-component__view__projects__content__item__menu">
             <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
               <mat-icon>more_vert</mat-icon>
               <mat-menu #menu="matMenu">
@@ -54,9 +50,7 @@
           </div>
         </div>
       }
-    </div>
-    <div class="project-component__issues">
-      <router-outlet/>
+      </div>
     </div>
   </div>
 </div>

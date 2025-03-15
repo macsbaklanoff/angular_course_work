@@ -1,20 +1,14 @@
 @use 'theme-colors' as test_theme;
 @use '@angular/material' as mat;
+
 .project-component {
   display: grid;
-  margin-left: 14px;
+  padding-inline: 50px;
   &__header {
     display: grid;
-    grid-template-columns: minmax(50px, 400px) 1fr;
-    &__item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
   }
   &__view {
     display: grid;
-    grid-template-columns: minmax(50px, 400px) 1fr;
     gap: 30px;
     &__projects {
       display: grid;
@@ -32,18 +26,21 @@
           height: 24px;
         }
       }
-      &__item {
-        display: grid;
-        grid-template-columns: minmax(10px, 1fr) 40px;
-        min-height: 120px;
-        padding: 5px;
-        border: 1px solid #000000;
-        border-radius: 20px;
-        margin-top: 12px;
-        background-color: var(--md-sys-primary);
-        &__menu {
+      &__content {
+        &__item {
           display: grid;
-          place-items: center;
+          grid-template-columns: minmax(10px, 1fr) 40px;
+          min-height: 120px;
+          padding: 5px;
+          border: 1px solid #000000;
+          border-radius: 20px;
+          margin-top: 12px;
+          background-color: var(--md-sys-primary);
+
+          &__menu {
+            display: grid;
+            place-items: center;
+          }
         }
       }
     }
