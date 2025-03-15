@@ -38,23 +38,6 @@
           height: 24px;
         }
       }
-      &__content {
-        &__item {
-          display: grid;
-          grid-template-columns: minmax(10px, 1fr) 40px;
-          min-height: 120px;
-          padding: 5px;
-          border: 1px solid #000000;
-          border-radius: 20px;
-          margin-top: 12px;
-          background-color: var(--md-sys-primary);
-
-          &__menu {
-            display: grid;
-            place-items: center;
-          }
-        }
-      }
     }
   }
   &__issues {

@@ -72,18 +72,19 @@ export class ProjectComponent {
 
   public readonly projects = signal<IProjectResponse[]>([]);
 
-  public test: IProjectResponse[] = []
+  // public test: IProjectResponse[] = []
+  displayedColumns: string[] = ['code', 'name', 'created', 'modified'];
 
 
   constructor(private router: Router) {
     this.load();
-    this.dataSource.getData().subscribe({
-      next: data => {this.test = data.items}
-    })
+    // this.dataSource.getData().subscribe({
+    //   next: data => {this.test = data.items}
+    // })
   }
   public search(): void {
     //this.load();
-    
+
   }
 
   public load() {
