@@ -108,6 +108,7 @@ export class IssuesComponent {
 
   drop(event: CdkDragDrop<IIssueResponse[]>) {
     if (this.isLoading()) return;
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
