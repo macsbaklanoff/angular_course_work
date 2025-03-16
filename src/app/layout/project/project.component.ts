@@ -28,6 +28,8 @@ import {IProjectUpdateRequest} from '../../interfaces/requests/project/update-pr
 import {MatInput} from '@angular/material/input';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {IPageResponse} from '../../interfaces/responses/project/page-response.interface';
+import {formatDistanceToNow} from 'date-fns';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-project',
@@ -58,8 +60,10 @@ export class ProjectComponent {
 
   private readonly _pageRequest = signal<IPageRequest>({
     pageNumber: 1,
-    pageSize: 25,
+    pageSize: 5,
   });
+
+  public readonly total = signal<number>(0);
 
   private readonly _sortRequest = signal<ISortRequest>({
     sortBy: 'updated',
@@ -72,41 +76,50 @@ export class ProjectComponent {
 
   public readonly projects = signal<IProjectResponse[]>([]);
 
-  // public test: IProjectResponse[] = []
-  displayedColumns: string[] = ['code', 'name', 'created', 'modified'];
-
+  displayedColumns: string[] = ['code', 'name', 'created', 'modified', 'actions'];
 
   constructor(private router: Router) {
     this.load();
-    // this.dataSource.getData().subscribe({
-    //   next: data => {this.test = data.items}
-    // })
   }
-  public search(): void {
-    //this.load();
 
+  public search(): void {
+    this.load();
   }
 
   public load() {
     this.dataSource.getProjects(this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
-      next: (projects) => this.projects.set(projects.items.filter((project) =>
-        project.name.includes(this.searchTerm.toLowerCase())))
+      next: (projects) => {
+        const transformedProjects = projects.items.map(project => ({
+            ...project,
+            createdOn: formatDistanceToNow(new Date(project.createdOn), {addSuffix: true}),
+            modifiedOn: formatDistanceToNow(new Date(project.modifiedOn), {addSuffix: true}),
+          })
+        )
+        this.projects.set(transformedProjects);
+        this.total.set(projects.total);
+        this._pageRequest.set({
+          pageNumber: projects.pageNumber,
+          pageSize: projects.pageSize,
+        })
+      }
     });
-    console.log(this.projects());
   }
 
   public sortDirAscending() {
     this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
     this.load()
   }
+
   public sortDirDescending() {
     this._sortRequest.set({sortBy: 'updated', sortDir: 'desc'});
     this.load()
   }
+
   public sortByAscending() {
     this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
     this.load()
   }
+
   public sortByDescending() {
     this._sortRequest.set({sortBy: 'code', sortDir: 'asc'});
     this.load()
@@ -120,7 +133,8 @@ export class ProjectComponent {
       this.dataSource.createProject(request).subscribe({
         next: () => {
           this.load()
-        }
+        },
+        error: err => {alert(err.error.detail)}
       })
     });
   }
@@ -133,11 +147,13 @@ export class ProjectComponent {
       this.dataSource.updateProject(projectId, request).subscribe({
         next: () => {
           this.load()
-        }
+        },
+        error: err => {alert(err.error.detail)}
       });
       console.log('The dialog was closed');
     });
   }
+
   public deleteProject(projectId: string) {
     const dialogRef = this._matDialogRef.open(DeleteProjectDialogComponent)
 
@@ -146,16 +162,17 @@ export class ProjectComponent {
       this.dataSource.deleteProject(projectId).subscribe({
         next: () => {
           this.load()
-        }
+        },
+        error: err => {alert(err.error.detail)}
       });
     });
   }
 
   public onPageChange($event: PageEvent) {
     this._pageRequest.set({
+      pageNumber: $event.pageIndex + 1,
       pageSize: $event.pageSize,
-      pageNumber: $event.pageIndex,
     })
-    this.load()
+    this.load();
   }
 }

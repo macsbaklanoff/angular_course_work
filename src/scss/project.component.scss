@@ -38,6 +38,20 @@
           height: 24px;
         }
       }
+      &__content {
+        &__table {
+          &__column {
+            &__opt {
+              &__up {
+                color: green;
+                &__icon .mat_icon {
+                  color: green;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   &__issues {

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {RouterLink} from '@angular/router';
+import {MatBadge} from '@angular/material/badge';
 
 @Component({
   selector: 'app-navigation',
@@ -23,9 +24,11 @@ import {RouterLink} from '@angular/router';
     AsyncPipe,
     RouterLink,
     NgClass,
+    MatBadge,
   ]
 })
 export class NavigationComponent {
+
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 900px)')
