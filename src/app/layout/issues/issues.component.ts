@@ -26,6 +26,8 @@ import {UpdateIssueDialogComponent} from '../dialogs/issue-dialogs/update-issue-
 import {DeleteIssueDialogComponent} from '../dialogs/issue-dialogs/delete-issue-dialog/delete-issue-dialog.component';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatOption, MatSelect} from '@angular/material/select';
+import {ProjectDataSource} from '../../data-sources/project.data-source';
+import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
 
 @Component({
   selector: 'app-issues',
@@ -54,7 +56,8 @@ export class IssuesComponent implements OnInit {
 
   private readonly _matDialogRef = inject(MatDialog);
 
-  public dataSource = new IssueDataSource();
+  public issueDataSource = new IssueDataSource();
+  public projectDataSource = new ProjectDataSource();
 
   public readonly projectId = input.required<string>();
 
@@ -82,17 +85,30 @@ export class IssuesComponent implements OnInit {
   };
 
   toppings = new FormControl('');
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  public projectsList: IProjectResponse[] = [];
+  private projectIds: string[] = [];
 
   constructor() {
+    this.projectDataSource.getProjects().subscribe({
+      next: projects => {
+        this.projectsList = projects.items
+        this.projectIds.push(projects.items[0].id)
+      }
+    })
+    this.toppings.valueChanges.subscribe((selectedIds) => {
+        if (selectedIds == null) return;
+        this.projectIds = [...selectedIds]
+        this.load()
+    });
      effect(() => {
-       this.dataSource._projectId.set(this.projectId());
+       this.issueDataSource._projectId.set(this.projectId());
        this.load()
     });
   }
 
   public search() {
-    this.load()
+    //this.load()
+    console.log(this.toppings.value)
   }
 
   public sortDirAscending() {
@@ -118,12 +134,14 @@ export class IssuesComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
-    this.dataSource._projectId.set(this.projectId());
+    this.issueDataSource._projectId.set(this.projectId());
   }
 
   public load() : void {
-    this.dataSource.getIssues(this.projectId(), this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
-      next: (issues) => this.issues.set(issues.items.filter((issue) => issue.name.includes(this.searchTerm.toLowerCase()))),
+    this.issueDataSource.getIssues(this.projectIds, this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
+      next: (issues) => {
+        this.issues.set(issues.items.filter((issue) => issue.name.includes(this.searchTerm.toLowerCase())))
+      },
       error: () => console.log('error')
     })
   }
@@ -133,7 +151,7 @@ export class IssuesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((request: IIssueCreate) => {
       if (!request) return;
-      this.dataSource.createIssue(this.projectId(), request).subscribe({
+      this.issueDataSource.createIssue(this.projectId(), request).subscribe({
         next: (issue) => {this.load()}
       });
     });
@@ -144,7 +162,7 @@ export class IssuesComponent implements OnInit {
     dialogRef.afterClosed().subscribe((request: IIssueUpdateRequest) => {
       if (!request) return;
 
-      this.dataSource.updateIssue(this.projectId(), issueId, request).subscribe({
+      this.issueDataSource.updateIssue(this.projectId(), issueId, request).subscribe({
         next: () => {this.load()}
       })
     });
@@ -154,7 +172,7 @@ export class IssuesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
-      this.dataSource.deleteIssue(this.projectId(), issueId).subscribe({
+      this.issueDataSource.deleteIssue(this.projectId(), issueId).subscribe({
         next: () => {this.load()}
       })
     });

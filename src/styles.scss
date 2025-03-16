@@ -25,7 +25,7 @@ html {
   --md-sys-on-primary-container: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 10)}; // Текст на primary container
   --md-sys-primary-hover: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 80)};
   --md-sys-primary-40: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 70)};
-  --md-sys-primary-35: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 35)};
+  --md-sys-primary-35: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 80)};
   // Secondary Colors
   --md-sys-secondary: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 60)}; // Вторичный цвет
   --md-sys-on-secondary: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 100)}; // Контрастный текст на secondary

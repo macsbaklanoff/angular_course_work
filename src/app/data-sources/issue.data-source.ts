@@ -16,22 +16,10 @@ export class IssueDataSource {
 
   private readonly _issueService = inject(IssueService);
 
-  private readonly _pageRequest = signal<IPageRequest>({
-    pageNumber: 1,
-    pageSize: 25,
-  });
-
-  private readonly _sortRequest = signal<ISortRequest>({
-    sortBy: 'updated',
-    sortDir: 'desc',
-  });
-
-  private readonly _filterRequest = signal<IIssueFilterRequest>({});
-
   public readonly _projectId = signal<string>('');
 
-  public getIssues(projectId: string, pageRequest: IPageRequest, sortRequest: ISortRequest, filterRequest: IIssueFilterRequest) {
-    return this._issueService.getIssues(projectId, pageRequest, sortRequest, filterRequest);
+  public getIssues(projectIds: string[], pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IIssueFilterRequest) {
+    return this._issueService.getIssues(projectIds, pageRequest, sortRequest, filterRequest);
   }
   public createIssue(projectId: string, issueRequest: IIssueCreate) {
     return this._issueService.createIssue(projectId, issueRequest);

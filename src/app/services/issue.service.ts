@@ -16,13 +16,15 @@ import {IIssueDeleteResponse} from '../interfaces/responses/issue/issue-delete-r
 })
 export class IssueService {
   private readonly _httpClient = inject(HttpClient);
-  private readonly _apiPath = '/api/v1/issues/';
+  private readonly _apiPath = '/api/v1/issues';
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  public getIssues(projectId: string, pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IProjectFilterRequest) : Observable<IPageResponse<IIssueResponse>> {
+  public getIssues(projectIds: string[], pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IProjectFilterRequest) : Observable<IPageResponse<IIssueResponse>> {
     let params = new HttpParams();
-
+    for (let projectId of projectIds) {
+      params = params.append('projectId', projectId);
+    }
     if (!!pageRequest) { //!! более надежный запрос для проверки сложных значений
       params = params.append("pageNumber", pageRequest.pageNumber);
       params = params.append("pageSize", pageRequest.pageSize);
@@ -36,7 +38,8 @@ export class IssueService {
         params = params.append("searchTerm", filterRequest.searchTerm);
       }
     }
-    return this._httpClient.get<IPageResponse<IIssueResponse>>(`${this._apiPath}/${projectId}`, { params: params });
+    //console.log(projectIds);
+    return this._httpClient.get<IPageResponse<IIssueResponse>>(`${this._apiPath}`, { params: params });
   }
   public createIssue(projectId: string, issueRequest: IIssueCreate): Observable<IIssueResponse> {
     let params = new HttpParams();

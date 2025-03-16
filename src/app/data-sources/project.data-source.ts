@@ -11,7 +11,7 @@ export class ProjectDataSource {
 
   private readonly _projectService = inject(ProjectService);
 
-  public getProjects(pageRequest: IPageRequest, sortRequest: ISortRequest, filterRequest: IIssueFilterRequest) {
+  public getProjects(pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IIssueFilterRequest) {
     return this._projectService.getProjects(pageRequest, sortRequest, filterRequest);
   }
   public createProject(projectRequest: IProjectCreateRequest) {
