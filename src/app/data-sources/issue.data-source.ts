@@ -24,6 +24,11 @@ export class IssueDataSource {
   public createIssue(projectId: string, issueRequest: IIssueCreate) {
     return this._issueService.createIssue(projectId, issueRequest);
   }
+
+  public updateStageIssue(issueId: string, issue: IIssueUpdateRequest) {
+    return this._issueService.updateStageIssue(issueId, issue);
+  }
+
   public updateIssue(projectId: string, id: string, issueRequest: IIssueUpdateRequest) {
     return this._issueService.updateIssue(projectId, id, issueRequest);
   }
