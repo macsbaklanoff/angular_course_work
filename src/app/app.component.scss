@@ -15,14 +15,16 @@
   align-items: center;
   justify-content: space-between;
   padding-right: 50px;
-  background-color: var(--md-sys-primary-40);
+  //background-color: var(--md-sys-primary-40);
+  background-color: var(--mat-sys-secondary);
   min-height: 64px;
   height: auto;
   grid-column: main;
   grid-row: header;
 
   &__text {
-    color: var(--md-sys-on-secondary-container);
+    //color: var(--md-sys-on-secondary-container);
+    color: var(--mat-sys-on-secondary);
     font-size: 22px;
   }
   &__account {

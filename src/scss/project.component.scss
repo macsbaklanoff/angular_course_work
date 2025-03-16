@@ -14,18 +14,22 @@
     &__projects {
       display: grid;
       grid-template-columns: 1fr;
-
-      background-color: var(--md-sys-surface);
+      //background-color: var(--md-sys-surface);
+      background-color: var(--mat-sys-surface);
       border-radius: 20px;
       &__header {
         display: grid;
         align-items: center;
         height: 32px;
-        background-color: var(--md-sys-secondary);
-        color: var(--md-sys-on-surface);
+        //background-color: var(--md-sys-secondary);
+        background-color: var(--mat-sys-primary);
+        //color: var(--md-sys-on-surface);
         border-radius: 20px 20px 0px 0px;
         padding: 10px;
         font-size: 18px;
+        &__text {
+          color: var(--mat-sys-on-primary);
+        }
       }
 
       &__search {
@@ -36,20 +40,6 @@
         &__input {
           border-radius: 16px;
           height: 24px;
-        }
-      }
-      &__content {
-        &__table {
-          &__column {
-            &__opt {
-              &__up {
-                color: green;
-                &__icon .mat_icon {
-                  color: green;
-                }
-              }
-            }
-          }
         }
       }
     }
