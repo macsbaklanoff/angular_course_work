@@ -60,10 +60,6 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-<!--        <mat-paginator [pageSizeOptions]="[1, 2]"-->
-<!--                       showFirstLastButtons-->
-<!--                       aria-label="Select page of periodic elements">-->
-<!--        </mat-paginator>-->
         <mat-paginator [length]="total()"
                        [pageSizeOptions]="[5, 10, 25, 100]"
                        (page)="onPageChange($event)"
@@ -74,12 +70,3 @@
   </div>
 </div>
 
-
-<!--<button mat-button (click)="createProject()">Create Project</button>-->
-
-<!--@for (project of dataSource.$data | async; track project.id) {-->
-<!--  <div class="project" routerLink="{{ project.id }}">-->
-<!--    <p>{{ project.name }}</p>-->
-<!--  </div>-->
-<!--}-->
-<!--<router-outlet/>-->

@@ -1,7 +1,7 @@
 import {Component, effect, inject, Input, input, OnInit, signal} from '@angular/core';
 import {IssueDataSource} from '../../data-sources/issue.data-source';
 import {MatTableModule} from '@angular/material/table';
-import {FormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
@@ -24,6 +24,8 @@ import {IIssueFilterRequest} from '../../interfaces/requests/issue/issue-filter-
 import {IPageResponse} from '../../interfaces/responses/project/page-response.interface';
 import {UpdateIssueDialogComponent} from '../dialogs/issue-dialogs/update-issue-dialog/update-issue-dialog.component';
 import {DeleteIssueDialogComponent} from '../dialogs/issue-dialogs/delete-issue-dialog/delete-issue-dialog.component';
+import {MatPaginator} from "@angular/material/paginator";
+import {MatOption, MatSelect} from '@angular/material/select';
 
 @Component({
   selector: 'app-issues',
@@ -39,7 +41,11 @@ import {DeleteIssueDialogComponent} from '../dialogs/issue-dialogs/delete-issue-
     NgStyle,
     MatMenuTrigger,
     MatMenu,
-    MatMenuItem
+    MatMenuItem,
+    MatPaginator,
+    MatSelect,
+    ReactiveFormsModule,
+    MatOption
   ],
   templateUrl: './issues.component.html',
   styleUrl: 'issues.component.scss'
@@ -74,6 +80,9 @@ export class IssuesComponent implements OnInit {
     'Normal': '#dbd765', // Жёлтый
     'Minor' : '#45a85b', // Зелёный
   };
+
+  toppings = new FormControl('');
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
   constructor() {
      effect(() => {
@@ -150,16 +159,4 @@ export class IssuesComponent implements OnInit {
       })
     });
   }
-  //
-  // deleteAllIssues() {
-  //   const dialogRef = this._matDialogRef.open(DeleteAllIssuesDialogComponent);
-  //
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (!result) return;
-  //     this._issueService.deleteAllIssues(this.projectId()).subscribe({
-  //       next: () => this.dataSource.refresh()
-  //     })
-  //     console.log('The dialog was closed');
-  //   });
-  // }
 }
