@@ -1,0 +1,19 @@
+<div class="nav">
+  <app-navigation></app-navigation>
+</div>
+<div class="header">
+  <h4 class="header__text">OVRIS - Overcome Issues</h4>
+  <div class="header__account">
+    @if (authService.isAuthorized()) {
+      <mat-icon>account_circle</mat-icon>
+      <span>{{ authService.authData()?.name }}</span>
+    } @else {
+      <span class="material-symbols-outlined">
+        account_circle_off
+      </span>
+    }
+  </div>
+</div>
+<div class="content">
+  <router-outlet/>
+</div>

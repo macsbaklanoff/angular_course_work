@@ -1,7 +1,14 @@
-<form class="test" (ngSubmit)="signOut()">
-  <p>Sign out?</p>
-  <div class="buttons">
-    <button mat-button (click)="cancel()">No</button>
-    <button mat-button (click)="signOut()">Yes</button>
+<div class="sign-out">
+  <div class="sign-out__form">
+      <div class="sign-out__form__header">
+        <span>Sign in</span>
+      </div>
+      <div class="sign-out__form__footer">
+        <div class="sign-out__form__footer__icon"></div>
+        <div class="sign-out__form__footer__buttons">
+          <button mat-button (click)="cancel()">No</button>
+          <button mat-flat-button (click)="signOut()">Yes</button>
+        </div>
+      </div>
   </div>
-</form>
+</div>

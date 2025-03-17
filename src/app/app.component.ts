@@ -8,6 +8,7 @@ import {map, shareReplay} from 'rxjs/operators';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {AsyncPipe} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
+import {LoginComponent} from './layout/auth/login/login.component';
 @Component({
   selector: 'app-root',
   imports: [
@@ -16,13 +17,14 @@ import {MatIcon} from '@angular/material/icon';
     MatButton,
     AsyncPipe,
     MatIcon,
+    LoginComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'angular_course_work';
-  public authService = inject(AuthService);
+  //public authService = inject(AuthService);
 
 }
 
