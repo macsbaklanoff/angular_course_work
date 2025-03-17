@@ -28,6 +28,7 @@ $border-radius: 20px;
       &__opt {
         background-color: var(--mat-sys-surface);
         padding: 10px;
+        border-radius: 0px 0px 20px 20px;
         &__search {
           display: grid;
           grid-template-columns: 1fr minmax(10px, 100px);
@@ -36,6 +37,15 @@ $border-radius: 20px;
           &__input {
             border-radius: 16px;
             height: 24px;
+          }
+        }
+        &__options {
+          &__multiselect {
+            width: 100%;
+            &__item {
+              display: grid;
+              grid-template-columns: 1fr minmax(10px, 150px);
+            }
           }
         }
       }
@@ -56,8 +66,8 @@ $border-radius: 20px;
   padding: 8px;
   justify-content: center;
   //background-color: var(--md-sys-primary-35);
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  background-color: var(--mat-sys-secondary-fixed-dim);
+  color: var(--mat-sys-on-secondary-fixed);
   border-radius: 16px;
 }
 
@@ -71,20 +81,35 @@ $border-radius: 20px;
 
 .example-box {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 4px;
+  grid-template-columns: 12px 1fr;
+  gap: 4px;
   border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
+  //color: rgba(0, 0, 0, 0.87);
+  color: var(--mat-sys-on-primary-fixed);
   align-items: center;
   box-sizing: border-box;
   cursor: move;
-  background: white;
+  background-color: var(--mat-sys-primary-fixed-dim);
   font-size: 14px;
   border-radius: 16px;
+  &__priority {
+    height: 100%;
+    border-radius: 16px 0px 0px 16px;
+  }
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    &__menu {
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 
 .cdk-drag-preview {
   box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
   border-radius: 16px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
   0 8px 10px 1px rgba(0, 0, 0, 0.14),

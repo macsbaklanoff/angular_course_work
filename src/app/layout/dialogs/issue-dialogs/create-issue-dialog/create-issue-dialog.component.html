@@ -17,10 +17,11 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Priority</mat-label>
-      <input matInput formControlName="priority"/>
-      @if(priority.hasError('required')) {
-        <mat-error>Priority is <strong>description</strong></mat-error>
-      }
+      <mat-select formControlName="priority">
+        @for (priority of priorityes; track priority) {
+          <mat-option [value]="priority">{{priority}}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
   </form>
 </mat-dialog-content>

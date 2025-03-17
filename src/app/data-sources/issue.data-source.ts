@@ -21,19 +21,19 @@ export class IssueDataSource {
   public getIssues(projectIds: string[], pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IIssueFilterRequest) {
     return this._issueService.getIssues(projectIds, pageRequest, sortRequest, filterRequest);
   }
-  public createIssue(projectId: string, issueRequest: IIssueCreate) {
-    return this._issueService.createIssue(projectId, issueRequest);
+  public createIssue(issueRequest: IIssueCreate) {
+    return this._issueService.createIssue(issueRequest);
   }
 
   public updateStageIssue(issueId: string, issue: IIssueUpdateRequest) {
     return this._issueService.updateStageIssue(issueId, issue);
   }
 
-  public updateIssue(projectId: string, id: string, issueRequest: IIssueUpdateRequest) {
-    return this._issueService.updateIssue(projectId, id, issueRequest);
+  public updateIssue(issueId: string, issueRequest: IIssueUpdateRequest) {
+    return this._issueService.updateIssue(issueId, issueRequest);
   }
-  public deleteIssue(projectId: string, id: string) {
-    return this._issueService.deleteIssue(projectId, id);
+  public deleteIssue(issueId: string) {
+    return this._issueService.deleteIssue(issueId);
   }
   // private readonly _issuesResource = rxResource({
   //   request: () => ({

@@ -1,33 +1,21 @@
 <h2 mat-dialog-title>Create Issue</h2>
 <mat-dialog-content>
-  <form class="test" [formGroup]="createForm" (ngSubmit)="onCreate()">
+  <form class="test" [formGroup]="updateForm" (ngSubmit)="onCreate()">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name"/>
-      @if(name.hasError('required')) {
-        <mat-error>Name is <strong>required</strong></mat-error>
-      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>Description</mat-label>
       <input matInput formControlName="description"/>
-      @if(description.hasError('required')) {
-        <mat-error>Description is <strong>required</strong></mat-error>
-      }
     </mat-form-field>
     <mat-form-field>
       <mat-label>Priority</mat-label>
-      <input matInput formControlName="priority"/>
-      @if(priority.hasError('required')) {
-        <mat-error>Priority is <strong>required</strong></mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>State</mat-label>
-      <input matInput formControlName="state"/>
-      @if(state.hasError('required')) {
-        <mat-error>State is <strong>required</strong></mat-error>
-      }
+      <mat-select formControlName="priority">
+        @for (priority of priorityes; track priority) {
+          <mat-option [value]="priority">{{priority}}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
   </form>
 </mat-dialog-content>

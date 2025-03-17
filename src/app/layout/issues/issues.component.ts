@@ -37,6 +37,7 @@ import {ProjectDataSource} from '../../data-sources/project.data-source';
 import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatProgressBar} from '@angular/material/progress-bar';
+import {issuePriority} from '../../types/issue-type';
 
 @Component({
   selector: 'app-issues',
@@ -257,12 +258,18 @@ export class IssuesComponent {
     })
   }
 
-  public createIssue(): void {
+  public createIssue(projectId: string): void {
     const dialogRef = this._matDialogRef.open(CreateIssueDialogComponent)
 
     dialogRef.afterClosed().subscribe((request: IIssueCreate) => {
       if (!request) return;
-      this.issueDataSource.createIssue(this.projectId(), request).subscribe({
+      let newRequest: IIssueCreate = {
+        projectId: projectId,
+        name: request.name,
+        description: request.description,
+        priority: request.priority,
+      }
+      this.issueDataSource.createIssue(newRequest).subscribe({
         next: (issue) => {
           this.load()
         }
@@ -276,7 +283,7 @@ export class IssuesComponent {
     dialogRef.afterClosed().subscribe((request: IIssueUpdateRequest) => {
       if (!request) return;
 
-      this.issueDataSource.updateIssue(this.projectId(), issueId, request).subscribe({
+      this.issueDataSource.updateIssue(issueId, request).subscribe({
         next: () => {
           this.load()
         }
@@ -289,7 +296,7 @@ export class IssuesComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
-      this.issueDataSource.deleteIssue(this.projectId(), issueId).subscribe({
+      this.issueDataSource.deleteIssue(issueId).subscribe({
         next: () => {
           this.load()
         }

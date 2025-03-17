@@ -13,11 +13,16 @@
           </button>
         </div>
         <div class="issue-component__view__header__opt__options">
-          <mat-form-field>
+          <mat-form-field class="issue-component__view__header__opt__options__multiselect">
             <mat-label>Projects</mat-label>
             <mat-select [formControl]="toppings" multiple>
               @for (project of projectsList; track project.id) {
-                <mat-option [value]="project.id">{{ project.code }}</mat-option>
+                <div class="issue-component__view__header__opt__options__multiselect__item">
+                  <mat-option [value]="project.id">
+                    {{ project.code }}
+                  </mat-option>
+                  <button mat-button (click)="createIssue(project.id)">Create Issue</button>
+                </div>
               }
             </mat-select>
           </mat-form-field>
@@ -41,8 +46,30 @@
               @for (item of issues(); track item) {
                 @if (item.stage == "Backlog") {
                   <div class="example-box" cdkDrag>
-                    <p>{{ item.projectCode }} - {{ item.name }}</p>
-                    <p>{{ item.state }}</p>
+                    <div class="example-box__priority"
+                         [ngStyle]="{'background-color': priorityColors[item.priority]}">
+                    </div>
+                    <div class="example-box__content">
+                      <div class="example-box__content__info">
+                        <p>{{ item.projectCode }} - {{ item.name }}</p>
+                        <p>{{ item.state }}</p>
+                      </div>
+                      <div class="example-box__content__menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="updateIssue(item.id)">
+                              <mat-icon style="color: green;">arrow_upward</mat-icon>
+                              <span style="color: green;">Update</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteIssue(item.id)">
+                              <mat-icon style="color: red;">delete</mat-icon>
+                              <span style="color: red;">Delete</span>
+                            </button>
+                          </mat-menu>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 }
               }
@@ -61,8 +88,30 @@
               @for (item of todo(); track item) {
                 @if (item.stage == "ToDo") {
                   <div class="example-box" cdkDrag>
-                    <p>{{ item.projectCode }} - {{ item.name }}</p>
-                    <p>{{ item.state }}</p>
+                    <div class="example-box__priority"
+                         [ngStyle]="{'background-color': priorityColors[item.priority]}">
+                    </div>
+                    <div class="example-box__content">
+                      <div class="example-box__content__info">
+                        <p>{{ item.projectCode }} - {{ item.name }}</p>
+                        <p>{{ item.state }}</p>
+                      </div>
+                      <div class="example-box__content__menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="updateIssue(item.id)">
+                              <mat-icon style="color: green;">arrow_upward</mat-icon>
+                              <span style="color: green;">Update</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteIssue(item.id)">
+                              <mat-icon style="color: red;">delete</mat-icon>
+                              <span style="color: red;">Delete</span>
+                            </button>
+                          </mat-menu>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 }
               }
@@ -81,8 +130,30 @@
               @for (item of inprogress(); track item) {
                 @if (item.stage == "InProgress") {
                   <div class="example-box" cdkDrag>
-                    <p>{{ item.projectCode }} - {{ item.name }}</p>
-                    <p>{{ item.state }}</p>
+                    <div class="example-box__priority"
+                         [ngStyle]="{'background-color': priorityColors[item.priority]}">
+                    </div>
+                    <div class="example-box__content">
+                      <div class="example-box__content__info">
+                        <p>{{ item.projectCode }} - {{ item.name }}</p>
+                        <p>{{ item.state }}</p>
+                      </div>
+                      <div class="example-box__content__menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="updateIssue(item.id)">
+                              <mat-icon style="color: green;">arrow_upward</mat-icon>
+                              <span style="color: green;">Update</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteIssue(item.id)">
+                              <mat-icon style="color: red;">delete</mat-icon>
+                              <span style="color: red;">Delete</span>
+                            </button>
+                          </mat-menu>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 }
               }
@@ -101,8 +172,30 @@
               @for (item of done(); track item) {
                 @if (item.stage == "Done") {
                   <div class="example-box" cdkDrag>
-                    <p>{{ item.projectCode }} - {{ item.name }}</p>
-                    <p>{{ item.state }}</p>
+                    <div class="example-box__priority"
+                         [ngStyle]="{'background-color': priorityColors[item.priority]}">
+                    </div>
+                    <div class="example-box__content">
+                      <div class="example-box__content__info">
+                        <p>{{ item.projectCode }} - {{ item.name }}</p>
+                        <p>{{ item.state }}</p>
+                      </div>
+                      <div class="example-box__content__menu">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="updateIssue(item.id)">
+                              <mat-icon style="color: green;">arrow_upward</mat-icon>
+                              <span style="color: green;">Update</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteIssue(item.id)">
+                              <mat-icon style="color: red;">delete</mat-icon>
+                              <span style="color: red;">Delete</span>
+                            </button>
+                          </mat-menu>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 }
               }

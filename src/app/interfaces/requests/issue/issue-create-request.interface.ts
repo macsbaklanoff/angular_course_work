@@ -1,5 +1,6 @@
 export interface IIssueCreate {
+  projectId: string;
   name: string;
-  description: string;
+  description?: string;
   priority: string;
 }

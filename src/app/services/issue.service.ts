@@ -41,19 +41,19 @@ export class IssueService {
     //console.log(projectIds);
     return this._httpClient.get<IPageResponse<IIssueResponse>>(`${this._apiPath}`, { params: params });
   }
-  public createIssue(projectId: string, issueRequest: IIssueCreate): Observable<IIssueResponse> {
+  public createIssue(issueRequest: IIssueCreate): Observable<IIssueResponse> {
     let params = new HttpParams();
-    return this._httpClient.post<IIssueResponse>(`${this._apiPath}/${projectId}`, JSON.stringify(issueRequest), {params: params});
+    return this._httpClient.post<IIssueResponse>(`${this._apiPath}`, JSON.stringify(issueRequest), {params: params});
   }
 
   public updateStageIssue(issueId: string, issue: IIssueUpdateRequest): Observable<IIssueUpdateResponse> {
     return this._httpClient.put<IIssueUpdateResponse>(`${this._apiPath}`+`/${issueId}`, JSON.stringify(issue), {headers: this.headers});
   }
 
-  public updateIssue(projectId: string, id: string, updateIssueRequest: IIssueUpdateRequest): Observable<IIssueUpdateResponse> {
-    return this._httpClient.put<IIssueUpdateResponse>(`${this._apiPath}`+`${projectId}`+`/${id}`, JSON.stringify(updateIssueRequest), {headers: this.headers});
+  public updateIssue(issueId: string, updateIssueRequest: IIssueUpdateRequest): Observable<IIssueUpdateResponse> {
+    return this._httpClient.put<IIssueUpdateResponse>(`${this._apiPath}/${issueId}`, JSON.stringify(updateIssueRequest), {headers: this.headers});
   }
-  public deleteIssue(projectId: string, id: string): Observable<IIssueDeleteResponse> {
-    return this._httpClient.delete<IIssueDeleteResponse>(`${this._apiPath}`+`${projectId}`+`/${id}`);
+  public deleteIssue(issueId: string): Observable<IIssueDeleteResponse> {
+    return this._httpClient.delete<IIssueDeleteResponse>(`${this._apiPath}/${issueId}`);
   }
 }

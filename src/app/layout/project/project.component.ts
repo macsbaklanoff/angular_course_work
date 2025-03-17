@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {ProjectDataSource} from '../../data-sources/project.data-source';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule} from '@angular/forms';
@@ -65,8 +65,8 @@ export class ProjectComponent {
 
   public readonly total = signal<number>(0);
 
-  private readonly _sortRequest = signal<ISortRequest>({
-    sortBy: 'updated',
+  public readonly _sortRequest = signal<ISortRequest>({
+    sortBy: 'code',
     sortDir: 'asc',
   });
 
@@ -103,26 +103,6 @@ export class ProjectComponent {
         })
       }
     });
-  }
-
-  public sortDirAscending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
-    this.load()
-  }
-
-  public sortDirDescending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'desc'});
-    this.load()
-  }
-
-  public sortByAscending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
-    this.load()
-  }
-
-  public sortByDescending() {
-    this._sortRequest.set({sortBy: 'code', sortDir: 'asc'});
-    this.load()
   }
 
   public createProject(): void {
@@ -174,5 +154,9 @@ export class ProjectComponent {
       pageSize: $event.pageSize,
     })
     this.load();
+  }
+
+  public sort() {
+    console.log('asd')
   }
 }
