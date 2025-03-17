@@ -34,7 +34,7 @@
 
       &__search {
         display: grid;
-        grid-template-columns: 1fr minmax(10px, 100px);
+        grid-template-columns: minmax(10px, 1fr) minmax(10px, 100px);
         gap: 16px;
         justify-content: space-between;
         &__input {
