@@ -58,6 +58,7 @@ p {
 .th-header {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 @media (width < 890px) {
   .project-component {

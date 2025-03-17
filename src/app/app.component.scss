@@ -16,7 +16,7 @@
   justify-content: space-between;
   padding-right: 50px;
   //background-color: var(--md-sys-primary-40);
-  background-color: var(--mat-sys-secondary);
+  background-color: var(--mat-sys-primary);
   min-height: 64px;
   height: auto;
   grid-column: main;
@@ -24,7 +24,7 @@
 
   &__text {
     //color: var(--md-sys-on-secondary-container);
-    color: var(--mat-sys-on-secondary);
+    color: var(--mat-sys-on-primary);
     font-size: 22px;
   }
   &__account {

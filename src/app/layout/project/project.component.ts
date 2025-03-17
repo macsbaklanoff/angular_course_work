@@ -65,11 +65,14 @@ export class ProjectComponent {
 
   public readonly total = signal<number>(0);
 
-  public readonly _sortRequest = signal<ISortRequest>({
+  private readonly _sortRequest = signal<ISortRequest>({
     sortBy: 'code',
     sortDir: 'asc',
   });
 
+  public sortRequest = computed(() => {
+    return this._sortRequest().sortDir;
+  })
   private readonly _filterRequest = signal<IProjectFilterRequest>({});
 
   public searchTerm: string = '';
@@ -156,7 +159,22 @@ export class ProjectComponent {
     this.load();
   }
 
-  public sort() {
-    console.log('asd')
+  public changeSort(sortBy: string) {
+    if (this._sortRequest().sortDir === 'asc') {
+      this._sortRequest.set({
+        sortBy: sortBy,
+        sortDir: "desc"
+      });
+      console.log(this.sortRequest());
+      this.load()
+    }
+    else {
+      this._sortRequest.set({
+        sortBy: sortBy,
+        sortDir: "asc"
+      });
+      console.log(this.sortRequest());
+      this.load()
+    }
   }
 }
