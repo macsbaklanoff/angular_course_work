@@ -133,7 +133,7 @@ mat-nav-list {
 }
 .nav-list-phone {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   overflow-y: hidden;
   &__item {
     display: grid;
