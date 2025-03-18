@@ -103,11 +103,12 @@ export class IssuesComponent {
     this.projectDataSource.getProjects().subscribe({
       next: projects => {
         this.projectsList = projects.items
-        this.load()
+        //this.load()
       }
     })
     this.toppings.valueChanges.subscribe((selectedIds) => {
       if (selectedIds == null) return;
+
       this.projectIds = [...selectedIds]
       this.load()
     });

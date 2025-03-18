@@ -23,7 +23,6 @@ import {ISortRequest} from '../../interfaces/sort-request.interface';
 import {IProjectFilterRequest} from '../../interfaces/requests/project/project-filter-request.interface';
 import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
 import {IProjectUpdateRequest} from '../../interfaces/requests/project/update-project-request.interface';
-import {MatInput} from '@angular/material/input';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {formatDistanceToNow} from 'date-fns';
 import {debounceTime} from 'rxjs/operators';
@@ -50,14 +49,10 @@ export class ProjectComponent {
 
   public dataSource = new ProjectDataSource();
 
-  private _projectService = inject(ProjectService);
-
   private readonly _pageRequest = signal<IPageRequest>({
     pageNumber: 1,
     pageSize: 5,
   });
-
-  public readonly total = signal<number>(0);
 
   private readonly _sortRequest = signal<ISortRequest>({
     sortBy: 'code',
@@ -68,6 +63,8 @@ export class ProjectComponent {
     return this._sortRequest().sortDir;
   })
   private readonly _filterRequest = signal<IProjectFilterRequest>({});
+
+  public readonly total = signal<number>(0);
 
   public searchTerm = signal<string>('');
 

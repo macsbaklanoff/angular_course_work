@@ -1,22 +1,14 @@
-import {computed, inject, signal} from '@angular/core';
+import {inject, signal} from '@angular/core';
 import {IPageRequest} from '../interfaces/page-request.interface';
 import {ISortRequest} from '../interfaces/sort-request.interface';
 import {IssueService} from '../services/issue.service';
-import {rxResource} from '@angular/core/rxjs-interop';
-import {IProjectFilterRequest} from '../interfaces/requests/project/project-filter-request.interface';
 import {IIssueFilterRequest} from '../interfaces/requests/issue/issue-filter-request.interface';
-import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
-import {IIssueResponse} from '../interfaces/responses/issue/issue.interface';
 import {IIssueUpdateRequest} from '../interfaces/requests/issue/update-issue-request.interface';
 import {IIssueCreate} from '../interfaces/requests/issue/issue-create-request.interface';
-import {Observable} from 'rxjs';
-import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
 
 export class IssueDataSource {
 
   private readonly _issueService = inject(IssueService);
-
-  public readonly _projectId = signal<string>('');
 
   public getIssues(projectIds: string[], pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IIssueFilterRequest) {
     return this._issueService.getIssues(projectIds, pageRequest, sortRequest, filterRequest);
