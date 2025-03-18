@@ -1,19 +1,17 @@
-import {computed, inject, signal} from '@angular/core';
+import {inject} from '@angular/core';
 import {ProjectService} from '../services/project.service';
-import {rxResource} from '@angular/core/rxjs-interop';
 import {IPageRequest} from '../interfaces/page-request.interface';
 import {ISortRequest} from '../interfaces/sort-request.interface';
-import {IProjectFilterRequest} from '../interfaces/requests/project/project-filter-request.interface';
-import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
 import {IIssueFilterRequest} from '../interfaces/requests/issue/issue-filter-request.interface';
 import {IProjectCreateRequest} from '../interfaces/requests/project/project-create-request.interface';
 import {IProjectUpdateRequest} from '../interfaces/requests/project/update-project-request.interface';
+
 
 export class ProjectDataSource {
 
   private readonly _projectService = inject(ProjectService);
 
-  public getProjects(pageRequest: IPageRequest, sortRequest: ISortRequest, filterRequest: IIssueFilterRequest) {
+  public getProjects(pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IIssueFilterRequest) {
     return this._projectService.getProjects(pageRequest, sortRequest, filterRequest);
   }
   public createProject(projectRequest: IProjectCreateRequest) {

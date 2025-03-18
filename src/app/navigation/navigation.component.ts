@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver} from '@angular/cdk/layout';
 import {AsyncPipe, NgClass} from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +13,7 @@ import {RouterLink} from '@angular/router';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrl: '../../scss/navigation.component.scss',
+  styleUrl: './navigation.component.scss',
   imports: [
     MatToolbarModule,
     MatButtonModule,
@@ -26,6 +26,7 @@ import {RouterLink} from '@angular/router';
   ]
 })
 export class NavigationComponent {
+
   private breakpointObserver = inject(BreakpointObserver);
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe('(max-width: 900px)')

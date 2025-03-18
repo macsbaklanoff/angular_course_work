@@ -1,0 +1,3 @@
+docker buildx build -f Dockerfile -t macsbaklanoff/cm25-client:0.1.0 -t macsbaklanoff/cm25-client:latest --build-context client="../../" --build-context nginx-templates="./nginx/templates" .
+
+docker push macsbaklanoff/cm25-client -a

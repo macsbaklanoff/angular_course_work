@@ -1,5 +1,8 @@
-<h2 mat-dialog-title>Delete Issue?</h2>
-<mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onDelete()">Delete</button>
-</mat-dialog-actions>
+<div class="delete-issue">
+  <h2 mat-dialog-title>Delete Issue?</h2>
+  <p>Are you sure you want to remove the issue? <br>This action is not reversible.</p>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button (click)="onDelete()" cdkFocusInitial style="background-color: red">Delete</button>
+  </mat-dialog-actions>
+</div>

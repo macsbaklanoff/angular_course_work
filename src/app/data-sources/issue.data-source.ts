@@ -1,46 +1,31 @@
-import {computed, inject, signal} from '@angular/core';
+import {inject, signal} from '@angular/core';
 import {IPageRequest} from '../interfaces/page-request.interface';
 import {ISortRequest} from '../interfaces/sort-request.interface';
 import {IssueService} from '../services/issue.service';
-import {rxResource} from '@angular/core/rxjs-interop';
-import {IProjectFilterRequest} from '../interfaces/requests/project/project-filter-request.interface';
 import {IIssueFilterRequest} from '../interfaces/requests/issue/issue-filter-request.interface';
-import {IProjectResponse} from '../interfaces/responses/project/project-response.interface';
-import {IIssueResponse} from '../interfaces/responses/issue/issue.interface';
 import {IIssueUpdateRequest} from '../interfaces/requests/issue/update-issue-request.interface';
 import {IIssueCreate} from '../interfaces/requests/issue/issue-create-request.interface';
-import {Observable} from 'rxjs';
-import {IPageResponse} from '../interfaces/responses/project/page-response.interface';
 
 export class IssueDataSource {
 
   private readonly _issueService = inject(IssueService);
 
-  private readonly _pageRequest = signal<IPageRequest>({
-    pageNumber: 1,
-    pageSize: 25,
-  });
-
-  private readonly _sortRequest = signal<ISortRequest>({
-    sortBy: 'updated',
-    sortDir: 'desc',
-  });
-
-  private readonly _filterRequest = signal<IIssueFilterRequest>({});
-
-  public readonly _projectId = signal<string>('');
-
-  public getIssues(projectId: string, pageRequest: IPageRequest, sortRequest: ISortRequest, filterRequest: IIssueFilterRequest) {
-    return this._issueService.getIssues(projectId, pageRequest, sortRequest, filterRequest);
+  public getIssues(projectIds: string[], pageRequest?: IPageRequest, sortRequest?: ISortRequest, filterRequest?: IIssueFilterRequest) {
+    return this._issueService.getIssues(projectIds, pageRequest, sortRequest, filterRequest);
   }
-  public createIssue(projectId: string, issueRequest: IIssueCreate) {
-    return this._issueService.createIssue(projectId, issueRequest);
+  public createIssue(issueRequest: IIssueCreate) {
+    return this._issueService.createIssue(issueRequest);
   }
-  public updateIssue(projectId: string, id: string, issueRequest: IIssueUpdateRequest) {
-    return this._issueService.updateIssue(projectId, id, issueRequest);
+
+  public updateStageIssue(issueId: string, issue: IIssueUpdateRequest) {
+    return this._issueService.updateStageIssue(issueId, issue);
   }
-  public deleteIssue(projectId: string, id: string) {
-    return this._issueService.deleteIssue(projectId, id);
+
+  public updateIssue(issueId: string, issueRequest: IIssueUpdateRequest) {
+    return this._issueService.updateIssue(issueId, issueRequest);
+  }
+  public deleteIssue(issueId: string) {
+    return this._issueService.deleteIssue(issueId);
   }
   // private readonly _issuesResource = rxResource({
   //   request: () => ({

@@ -1,0 +1,125 @@
+.project-component__view__projects > *:not(:first-child) {
+  padding: 10px;
+}
+
+.project-component {
+  display: grid;
+  padding-inline: 50px;
+
+  &__view {
+    display: grid;
+    gap: 30px;
+
+    &__projects {
+      display: grid;
+      grid-template-columns: 1fr;
+      background-color: var(--mat-sys-surface);
+      border-radius: 20px;
+
+      &__header {
+        display: grid;
+        align-items: center;
+        height: 32px;
+        background-color: var(--mat-sys-primary);
+        border-radius: 20px 20px 0px 0px;
+        padding: 10px;
+        font-size: 18px;
+
+        &__text {
+          color: var(--mat-sys-on-primary);
+        }
+      }
+
+      &__search {
+        display: grid;
+        grid-template-columns: minmax(10px, 1fr);
+        gap: 16px;
+        justify-content: space-between;
+
+        &__input {
+          position: relative;
+          isolation: isolate;
+          overflow: hidden;
+
+          border-radius: var(--mat-sys-corner-extra-large);
+          background-color: var(--mat-sys-surface-container-high);
+
+          &:hover {
+            --_state-layer-opacity: var(--mat-sys-hover-state-layer-opacity);
+          }
+
+          &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background-color: currentColor;
+            border-radius: inherit;
+            transition: opacity 150ms linear;
+
+            opacity: var(--_state-layer-opacity, 0);
+          }
+          &__prefix {
+            margin-left: 4px;
+          }
+
+          &__suffix {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  &__issues {
+    margin-right: 30px;
+    padding: 10px;
+    background-color: var(--md-sys-surface);
+    border-radius: 20px;
+  }
+}
+
+p {
+  margin: 0;
+  padding: 5px;
+}
+
+.th-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+@media (width < 700px) {
+  .project-component {
+    padding-inline: 0px;
+  }
+}
+
+@media (width < 600px) {
+  .project-component {
+    &__view {
+      &__projects {
+        &__content {
+          &__column-tablet {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (width < 300px) {
+  .project-component {
+    &__view {
+      &__projects {
+        &__content {
+          &__column-phone {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

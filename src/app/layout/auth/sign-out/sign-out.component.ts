@@ -9,7 +9,7 @@ import {AuthService} from '../../../services/auth.service';
   imports: [
     FormsModule,
     MatButton,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './sign-out.component.html',
   styleUrl: './sign-out.component.scss'

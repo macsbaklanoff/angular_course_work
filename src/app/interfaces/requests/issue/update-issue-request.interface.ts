@@ -1,6 +1,7 @@
 export interface IIssueUpdateRequest {
-  name: string;
-  description: string;
+  name?: string | null;
+  description?: string | null;
   priority: string;
-  state: string;
+  state: string | null;
+  stage: string | null;
 }

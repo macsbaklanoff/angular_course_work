@@ -10,9 +10,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
 
   headers = headers.set('Content-Type', 'application/json');
 
-  if (authService.isAuthorized()) {
-    headers = headers.set('Authorization', `Bearer ${authService.accessToken()}`)
-  }
+  headers = authService.addAuthorizationHeader(headers);
 
   req = req.clone({ headers: headers });
 

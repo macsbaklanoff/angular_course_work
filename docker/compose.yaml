@@ -27,7 +27,11 @@ services:
       CM25SERVER_DATABASE: "mongodb://mongodb/cm25server?retryWrites=false"
     networks:
       - cm25
-
+  frontend:
+    image: macsbaklanoff/cm25-client:0.1.0
+    container_name: frontend
+    networks:
+      - cm25
 volumes:
   cm25server_mongo_volume:
     external: false

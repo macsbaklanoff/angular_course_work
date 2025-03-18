@@ -1,56 +1,30 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 @use 'scss/theme-colors' as test_theme;
 @use 'sass:map';
+
 html {
+  color-scheme: light dark;
   @include mat.theme((
-    color: (
-      theme-type: color-scheme,
-      primary: test_theme.$primary-palette,
-      tertiary: test_theme.$tertiary-palette,
-    ),
+    color: mat.$azure-palette,
     typography: Roboto,
-    density: 0,
+    density: 0
   ));
 }
 
-:root {
-  // Primary Colors
-  --md-sys-primary: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 90)};
-  --md-sys-on-primary: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 100)}; // Контрастный текст на primary
-  --md-sys-primary-container: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 90)}; // Контейнер для primary
-  --md-sys-on-primary-container: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 10)}; // Текст на primary container
-  --md-sys-primary-hover: #{mat.m2-get-color-from-palette(test_theme.$primary-palette, 80)};
-  // Secondary Colors
-  --md-sys-secondary: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 60)}; // Вторичный цвет
-  --md-sys-on-secondary: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 100)}; // Контрастный текст на secondary
-  --md-sys-secondary-container: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 90)}; // Контейнер для secondary
-  --md-sys-on-secondary-container: #{mat.m2-get-color-from-palette(test_theme.$secondary-palette, 10)}; // Текст на secondary container
-  // Tertiary Colors
-  --md-sys-tertiary: #{mat.m2-get-color-from-palette(test_theme.$tertiary-palette, 40)}; // Третичный цвет
-  --md-sys-on-tertiary: #{mat.m2-get-color-from-palette(test_theme.$tertiary-palette, 100)}; // Контрастный текст на tertiary
-  --md-sys-tertiary-container: #{mat.m2-get-color-from-palette(test_theme.$tertiary-palette, 90)}; // Контейнер для tertiary
-  --md-sys-on-tertiary-container: #{mat.m2-get-color-from-palette(test_theme.$tertiary-palette, 10)}; // Текст на tertiary container
-
-  // Neutral Colors
-  --md-sys-background: #{mat.m2-get-color-from-palette(test_theme.$neutral-palette, 99)}; // Фон
-  --md-sys-on-background: #{mat.m2-get-color-from-palette(test_theme.$neutral-palette, 10)}; // Текст на фоне
-  --md-sys-surface: #{mat.m2-get-color-from-palette(test_theme.$neutral-palette, 95)}; // Поверхность
-  --md-sys-on-surface: #{mat.m2-get-color-from-palette(test_theme.$neutral-palette, 10)}; // Текст на поверхности
-
-}
 
 html, body {
   height: 100dvh;
   width: 100dvw;
-  overflow-x: hidden;
 }
 
 body {
   display: grid;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: var(--md-sys-primary);
+  background-color: var(--mat-sys-secondary-container);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
 }
 

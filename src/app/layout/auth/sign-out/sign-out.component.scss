@@ -1,16 +1,32 @@
-:host {
-  display: grid;
-  justify-items: center;
-  align-items: center;
-}
-.test {
+.sign-out {
   display: grid;
   place-items: center;
-  align-items: center;
-  border: 1px var(--md-sys-on-primary-container) solid;
-  border-radius: 22px;
-  padding: 24px;
-  &__buttons {
-    display: flex;
+  height: 200px;
+
+  &__form {
+    display: grid;
+    grid-template-columns: minmax(50px, 400px);
+    height: 200px;
+    border: 2px solid var(--mat-sys-on-secondary-container);
+    border-radius: 16px;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      background-color: var(--mat-sys-secondary);
+      color: var(--mat-sys-on-secondary);
+      border-radius: 12px 12px 0 0;
+      height: 64px;
+      padding-left: 24px;
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+    }
   }
+}
+
+.sign-out__form > *:not(:first-child) {
+  padding: 24px;
 }
