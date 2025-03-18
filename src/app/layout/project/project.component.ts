@@ -27,6 +27,8 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {formatDistanceToNow} from 'date-fns';
 import {debounceTime} from 'rxjs/operators';
 import {toObservable} from '@angular/core/rxjs-interop';
+import {MatFormField, MatPrefix, MatSuffix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-project',
@@ -39,7 +41,11 @@ import {toObservable} from '@angular/core/rxjs-interop';
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
-    MatPaginator
+    MatPaginator,
+    MatFormField,
+    MatInput,
+    MatPrefix,
+    MatSuffix
   ],
   templateUrl: './project.component.html',
   styleUrl: './project.component.scss'

@@ -5,8 +5,15 @@
         <h4 class="project-component__view__projects__header__text">Projects</h4>
       </div>
       <div class="project-component__view__projects__search">
-        <input type="text" class="project-component__view__projects__search__input" [(ngModel)]="searchTerm"
-               placeholder="Search">
+        <mat-form-field subscriptSizing="dynamic" class="project-component__view__projects__search__input">
+          <mat-icon matIconPrefix class="project-component__view__projects__search__input__prefix">search</mat-icon>
+          <input matInput placeholder="Search" [(ngModel)]="searchTerm">
+          @if (searchTerm() != '') {
+            <button matSuffix mat-icon-button class="project-component__view__projects__search__input__suffix" (click)="searchTerm.set('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
       </div>
       <div class="project-component__view__projects__options">
         <button mat-flat-button (click)="createProject()">Create Project</button>
