@@ -6,8 +6,15 @@
       </div>
       <div class="issue-component__view__header__opt">
         <div class="issue-component__view__header__opt__search">
-          <input type="text" class="issue-component__view__header__opt__search__input" [(ngModel)]="searchTerm"
-                 placeholder="Search">
+          <mat-form-field subscriptSizing="dynamic" class="issue-component__view__header__opt__search__input">
+            <mat-icon matIconPrefix class="issue-component__view__header__opt__search__input__prefix">search</mat-icon>
+            <input matInput placeholder="Search" [(ngModel)]="searchTerm">
+            @if (searchTerm() != '') {
+              <button matSuffix mat-icon-button class="issue-component__view__header__opt__search__input__suffix" (click)="searchTerm.set('')">
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </mat-form-field>
         </div>
         <div class="issue-component__view__header__opt__options">
           <mat-form-field class="issue-component__view__header__opt__options__multiselect">

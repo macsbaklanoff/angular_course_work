@@ -40,8 +40,35 @@ $border-radius: 20px;
           justify-content: space-between;
 
           &__input {
-            border-radius: 16px;
-            height: 24px;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+
+            border-radius: var(--mat-sys-corner-extra-large);
+            background-color: var(--mat-sys-surface-container-high);
+
+            &:hover {
+              --_state-layer-opacity: var(--mat-sys-hover-state-layer-opacity);
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              inset: 0;
+              z-index: -1;
+              background-color: currentColor;
+              border-radius: inherit;
+              transition: opacity 150ms linear;
+
+              opacity: var(--_state-layer-opacity, 0);
+            }
+            &__prefix {
+              margin-left: 4px;
+            }
+
+            &__suffix {
+              margin-right: 8px;
+            }
           }
         }
 
@@ -168,4 +195,9 @@ $border-radius: 20px;
 
     }
   }
+}
+
+
+.search {
+
 }
