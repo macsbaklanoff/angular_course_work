@@ -1,14 +1,14 @@
 <div class="sign-out">
   <div class="sign-out__form">
-      <div class="sign-out__form__header">
-        <span>Sign out?</span>
+    <div class="sign-out__form__header">
+      <span>Sign out?</span>
+    </div>
+    <div class="sign-out__form__footer">
+      <div class="sign-out__form__footer__icon"></div>
+      <div class="sign-out__form__footer__buttons">
+        <button mat-button (click)="cancel()">No</button>
+        <button mat-flat-button (click)="signOut()">Yes</button>
       </div>
-      <div class="sign-out__form__footer">
-        <div class="sign-out__form__footer__icon"></div>
-        <div class="sign-out__form__footer__buttons">
-          <button mat-button (click)="cancel()">No</button>
-          <button mat-flat-button (click)="signOut()">Yes</button>
-        </div>
-      </div>
+    </div>
   </div>
 </div>

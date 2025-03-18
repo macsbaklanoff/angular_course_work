@@ -8,8 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {
   CreateProjectDialogComponent
 } from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
-import {AsyncPipe} from '@angular/common';
-import {Router, RouterLink, RouterOutlet} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {
@@ -22,14 +21,12 @@ import {IProjectCreateRequest} from '../../interfaces/requests/project/project-c
 import {IPageRequest} from '../../interfaces/page-request.interface';
 import {ISortRequest} from '../../interfaces/sort-request.interface';
 import {IProjectFilterRequest} from '../../interfaces/requests/project/project-filter-request.interface';
-import {IIssueResponse} from '../../interfaces/responses/issue/issue.interface';
 import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
 import {IProjectUpdateRequest} from '../../interfaces/requests/project/update-project-request.interface';
 import {MatInput} from '@angular/material/input';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {IPageResponse} from '../../interfaces/responses/project/page-response.interface';
 import {formatDistanceToNow} from 'date-fns';
-import {debounceTime, map} from 'rxjs/operators';
+import {debounceTime} from 'rxjs/operators';
 import {toObservable} from '@angular/core/rxjs-interop';
 
 @Component({
@@ -38,15 +35,11 @@ import {toObservable} from '@angular/core/rxjs-interop';
     MatTableModule,
     FormsModule,
     MatButton,
-    AsyncPipe,
-    RouterOutlet,
-    RouterLink,
     MatIcon,
     MatIconButton,
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
-    MatInput,
     MatPaginator
   ],
   templateUrl: './project.component.html',
@@ -99,10 +92,6 @@ export class ProjectComponent {
     });
   }
 
-  public search(): void {
-    this.load();
-  }
-
   public load() {
     this.dataSource.getProjects(this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
       next: (projects) => {
@@ -147,7 +136,6 @@ export class ProjectComponent {
         },
         error: err => {alert(err.error.detail)}
       });
-      console.log('The dialog was closed');
     });
   }
 
@@ -187,7 +175,6 @@ export class ProjectComponent {
         sortBy: sortBy,
         sortDir: "asc"
       });
-      console.log(this.sortRequest());
       this.load()
     }
   }

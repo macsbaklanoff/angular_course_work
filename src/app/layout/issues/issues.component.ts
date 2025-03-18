@@ -1,43 +1,33 @@
-import {Component, effect, inject, Input, input, OnInit, signal} from '@angular/core';
+import {Component, effect, inject, input, signal} from '@angular/core';
 import {IssueDataSource} from '../../data-sources/issue.data-source';
 import {MatTableModule} from '@angular/material/table';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {AsyncPipe, NgStyle} from '@angular/common';
+import {NgStyle} from '@angular/common';
 import {
   CdkDrag,
   CdkDragDrop,
-  CdkDragPlaceholder,
   CdkDropList, CdkDropListGroup,
   moveItemInArray,
   transferArrayItem
 } from '@angular/cdk/drag-drop';
-import {MatMenu, MatMenuItem, MatMenuPanel, MatMenuTrigger} from '@angular/material/menu';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
-import {ProjectService} from '../../services/project.service';
-import {IssueService} from '../../services/issue.service';
 import {IIssueResponse} from '../../interfaces/responses/issue/issue.interface';
-import {
-  CreateProjectDialogComponent
-} from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
 import {IIssueUpdateRequest} from '../../interfaces/requests/issue/update-issue-request.interface';
 import {IIssueCreate} from '../../interfaces/requests/issue/issue-create-request.interface';
 import {CreateIssueDialogComponent} from '../dialogs/issue-dialogs/create-issue-dialog/create-issue-dialog.component';
 import {IPageRequest} from '../../interfaces/page-request.interface';
 import {ISortRequest} from '../../interfaces/sort-request.interface';
 import {IIssueFilterRequest} from '../../interfaces/requests/issue/issue-filter-request.interface';
-import {IPageResponse} from '../../interfaces/responses/project/page-response.interface';
 import {UpdateIssueDialogComponent} from '../dialogs/issue-dialogs/update-issue-dialog/update-issue-dialog.component';
 import {DeleteIssueDialogComponent} from '../dialogs/issue-dialogs/delete-issue-dialog/delete-issue-dialog.component';
-import {MatPaginator} from "@angular/material/paginator";
 import {MatOption, MatSelect} from '@angular/material/select';
 import {ProjectDataSource} from '../../data-sources/project.data-source';
 import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatProgressBar} from '@angular/material/progress-bar';
-import {issuePriority} from '../../types/issue-type';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {debounceTime} from 'rxjs/operators';
 
@@ -51,17 +41,14 @@ import {debounceTime} from 'rxjs/operators';
     FormsModule,
     CdkDropList,
     CdkDrag,
-    CdkDragPlaceholder,
     NgStyle,
     MatMenuTrigger,
     MatMenu,
     MatMenuItem,
-    MatPaginator,
     MatSelect,
     ReactiveFormsModule,
     MatOption,
     CdkDropListGroup,
-    MatProgressSpinner,
     MatProgressBar
   ],
   templateUrl: './issues.component.html',
@@ -116,7 +103,6 @@ export class IssuesComponent {
     this.projectDataSource.getProjects().subscribe({
       next: projects => {
         this.projectsList = projects.items
-        //this.projectIds.push(projects.items[0].id)
         this.load()
       }
     })
@@ -216,8 +202,6 @@ export class IssuesComponent {
     if (this.projectIds.length == 0) return;
     this.issueDataSource.getIssues(this.projectIds, this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
       next: (issues) => {
-        // this.issues.set(issues.items.filter((issue) => issue.name.includes(this.searchTerm.toLowerCase())))
-        // console.log(issues);
         let tempBacklog = []
         let tempToDo = []
         let tempInProgress = []

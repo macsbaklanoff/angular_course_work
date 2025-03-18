@@ -14,7 +14,6 @@ import dayjs, {Dayjs} from 'dayjs';
   providedIn: 'root'
 })
 export class AuthService {
-  // private readonly _router = Inject(Router);
 
   private readonly _http = inject(HttpClient);
 

@@ -48,8 +48,4 @@ export class ProjectService {
   public deleteProject(projectId: string): Observable<IProjectDeleteResponse> {
     return this._http.delete<IProjectDeleteResponse>(`${this._apiPath}/${projectId}`);
   }
-  //
-  // public deleteAllProjects() {
-  //   return this._http.delete<IProjectResponse[]>(`${this._apiPath}/all`);
-  // }
 }

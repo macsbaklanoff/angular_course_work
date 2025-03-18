@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Create Issue</h2>
 <mat-dialog-content>
-  <form class="test" [formGroup]="updateForm" (ngSubmit)="onCreate()">
+  <form class="update-issue" [formGroup]="updateForm" (ngSubmit)="onCreate()">
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input matInput formControlName="name"/>
@@ -9,7 +9,7 @@
       <mat-label>Priority</mat-label>
       <mat-select formControlName="priority">
         @for (priority of priorityes; track priority) {
-          <mat-option [value]="priority">{{priority}}</mat-option>
+          <mat-option [value]="priority">{{ priority }}</mat-option>
         }
       </mat-select>
     </mat-form-field>

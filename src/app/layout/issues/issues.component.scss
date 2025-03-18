@@ -8,12 +8,11 @@ $border-radius: 20px;
   &__view {
     display: grid;
     gap: 30px;
+
     &__header {
       display: grid;
       align-items: center;
       height: auto;
-      //background-color: var(--md-sys-secondary);
-      //color: var(--md-sys-on-surface);
 
       &__headline {
         background-color: var(--mat-sys-primary);
@@ -21,30 +20,35 @@ $border-radius: 20px;
         padding: 10px;
         font-size: 18px;
         height: 32px;
+
         &__text {
           color: var(--mat-sys-on-primary);
         }
       }
+
       &__opt {
         display: grid;
         gap: 16px;
         background-color: var(--mat-sys-surface);
         padding: 10px;
         border-radius: 0px 0px 20px 20px;
+
         &__search {
           display: grid;
-          //grid-template-columns: 1fr minmax(10px, 100px);
           grid-template-columns: 1fr;
           gap: 16px;
           justify-content: space-between;
+
           &__input {
             border-radius: 16px;
             height: 24px;
           }
         }
+
         &__options {
           &__multiselect {
             width: 100%;
+
             &__item {
               display: grid;
               grid-template-columns: minmax(100px, 1fr) minmax(10px, 150px);
@@ -68,7 +72,6 @@ $border-radius: 20px;
   max-width: 400px;
   min-width: 110px;
   padding: 8px;
-  //background-color: var(--md-sys-primary-35);
   background-color: var(--mat-sys-secondary);
   color: var(--mat-sys-on-secondary);
   border-radius: 16px;
@@ -87,7 +90,6 @@ $border-radius: 20px;
   grid-template-columns: 12px 1fr;
   gap: 4px;
   border-bottom: solid 1px #ccc;
-  //color: rgba(0, 0, 0, 0.87);
   color: var(--mat-sys-on-primary-fixed);
   align-items: center;
   box-sizing: border-box;
@@ -95,13 +97,16 @@ $border-radius: 20px;
   background-color: var(--mat-sys-primary-fixed-dim);
   font-size: 14px;
   border-radius: 16px;
+
   &__priority {
     height: 100%;
     border-radius: 16px 0px 0px 16px;
   }
+
   &__content {
     display: flex;
     justify-content: space-between;
+
     &__menu {
       display: flex;
       align-items: center;
@@ -139,6 +144,7 @@ $border-radius: 20px;
 @media (width < 700px) {
   .issue-component {
     padding-inline: 0px;
+
     &__view {
       &__content {
         grid-template-columns: 1fr 1fr;

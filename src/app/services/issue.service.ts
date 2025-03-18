@@ -38,7 +38,6 @@ export class IssueService {
         params = params.append("searchTerm", filterRequest.searchTerm);
       }
     }
-    //console.log(projectIds);
     return this._httpClient.get<IPageResponse<IIssueResponse>>(`${this._apiPath}`, { params: params });
   }
   public createIssue(issueRequest: IIssueCreate): Observable<IIssueResponse> {

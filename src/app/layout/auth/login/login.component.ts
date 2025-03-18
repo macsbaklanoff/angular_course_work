@@ -6,7 +6,6 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../../services/auth.service';
 import {Router, RouterLink} from '@angular/router';
-import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +17,6 @@ import {MatIcon} from '@angular/material/icon';
     ReactiveFormsModule,
     MatButton,
     RouterLink,
-    MatIcon
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

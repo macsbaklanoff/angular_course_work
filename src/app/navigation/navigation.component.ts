@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver} from '@angular/cdk/layout';
 import {AsyncPipe, NgClass} from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {RouterLink} from '@angular/router';
-import {MatBadge} from '@angular/material/badge';
 
 @Component({
   selector: 'app-navigation',
@@ -24,7 +23,6 @@ import {MatBadge} from '@angular/material/badge';
     AsyncPipe,
     RouterLink,
     NgClass,
-    MatBadge,
   ]
 })
 export class NavigationComponent {
