@@ -5,31 +5,38 @@ import {LoginComponent} from './layout/auth/login/login.component';
 import {RegisterComponent} from './layout/auth/register/register.component';
 import {authGuard} from './guards/auth.guard';
 import {SignOutComponent} from './layout/auth/sign-out/sign-out.component';
+import {SecuredAreaComponent} from './layout/secured-area/secured-area.component';
 
 export const routes: Routes = [
   {
-    path: 'projects',
-    component: ProjectComponent,
+    path: '',
+    component: SecuredAreaComponent,
     canActivate: [authGuard],
-    children: [{
-      path: ':projectId',
-      component: IssuesComponent
-    }]
+    children: [
+      {
+        path: 'projects',
+        component: ProjectComponent,
+      },
+      {
+        path: 'issues',
+        component: IssuesComponent,
+      },
+      {
+        path: 'sign-out',
+        component: SignOutComponent
+      },
+    ]
   },
   {
     path: 'auth',
     children: [
       {
-        path: 'login',
+        path: 'sign-in',
         component: LoginComponent
       },
       {
-        path: 'register',
+        path: 'sign-up',
         component: RegisterComponent
-      },
-      {
-        path: 'sign-out',
-        component: SignOutComponent
       },
     ]
   },

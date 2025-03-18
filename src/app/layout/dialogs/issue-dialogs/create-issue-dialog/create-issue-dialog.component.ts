@@ -1,10 +1,13 @@
-import {Component, computed, inject, model, Signal, signal} from '@angular/core';
+import {Component, computed, inject, Signal} from '@angular/core';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {issuePriority} from '../../../../types/issue-type';
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -14,7 +17,9 @@ import {toSignal} from '@angular/core/rxjs-interop';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInput,
-    MatLabel
+    MatLabel,
+    MatOption,
+    MatSelect
   ],
   templateUrl: './create-issue-dialog.component.html',
   styleUrl: './create-issue-dialog.component.scss'
@@ -29,22 +34,20 @@ export class CreateIssueDialogComponent {
 
   public createForm: FormGroup = new FormGroup({
     name: new FormControl<string>("", [Validators.required]),
-    description: new FormControl<string>("", [Validators.required]),
     priority: new FormControl<string>("", [Validators.required]),
   });
 
-  public createFormStatusChange = toSignal(this.createForm.statusChanges)
+  priorityes: issuePriority[] = ['Critical','Major','Minor','Normal'];
 
   public get name(): FormControl {
     return this.createForm.controls['name'] as FormControl;
   }
-  public get description(): FormControl {
-    return this.createForm.controls['description'] as FormControl;
-  }
-
   public get priority(): FormControl {
     return this.createForm.controls['priority'] as FormControl;
   }
+
+  public createFormStatusChange = toSignal(this.createForm.statusChanges)
+
 
   public onCreate(): void {
     if(this.isInvalidState()) return;

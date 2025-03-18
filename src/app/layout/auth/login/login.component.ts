@@ -5,7 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../../services/auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,8 @@ import {Router} from '@angular/router';
     MatInput,
     MatLabel,
     ReactiveFormsModule,
-    MatButton
+    MatButton,
+    RouterLink,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -48,10 +49,7 @@ export class LoginComponent {
     if(this.isInvalidState()) return;
 
     this._authService.login(this.loginForm.value).subscribe({
-      next: () => {this._router.navigate(['projects'])},
-      error: error => {
-        console.log(error);
-      }
+      error: err => {alert(err.error.detail)}
     })
   }
 }

@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal} from '@angular/core';
 import {ProjectDataSource} from '../../data-sources/project.data-source';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule} from '@angular/forms';
@@ -8,8 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {
   CreateProjectDialogComponent
 } from '../dialogs/project-dialogs/create-project-dialog/create-project-dialog.component';
-import {AsyncPipe} from '@angular/common';
-import {Router, RouterLink, RouterOutlet} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {
@@ -22,9 +21,13 @@ import {IProjectCreateRequest} from '../../interfaces/requests/project/project-c
 import {IPageRequest} from '../../interfaces/page-request.interface';
 import {ISortRequest} from '../../interfaces/sort-request.interface';
 import {IProjectFilterRequest} from '../../interfaces/requests/project/project-filter-request.interface';
-import {IIssueResponse} from '../../interfaces/responses/issue/issue.interface';
 import {IProjectResponse} from '../../interfaces/responses/project/project-response.interface';
 import {IProjectUpdateRequest} from '../../interfaces/requests/project/update-project-request.interface';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {formatDistanceToNow} from 'date-fns';
+import {debounceTime} from 'rxjs/operators';
+import {toObservable} from '@angular/core/rxjs-interop';
+import {MatFormField, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 
 @Component({
@@ -33,72 +36,82 @@ import {MatInput} from '@angular/material/input';
     MatTableModule,
     FormsModule,
     MatButton,
-    AsyncPipe,
-    RouterOutlet,
-    RouterLink,
     MatIcon,
     MatIconButton,
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
-    MatInput
+    MatPaginator,
+    MatFormField,
+    MatInput,
+    MatPrefix,
+    MatSuffix
   ],
   templateUrl: './project.component.html',
-  styleUrl: '../../../scss/project.component.scss'
+  styleUrl: './project.component.scss'
 })
 export class ProjectComponent {
   private readonly _matDialogRef = inject(MatDialog);
 
   public dataSource = new ProjectDataSource();
 
-  private _projectService = inject(ProjectService);
-
   private readonly _pageRequest = signal<IPageRequest>({
     pageNumber: 1,
-    pageSize: 25,
+    pageSize: 5,
   });
 
   private readonly _sortRequest = signal<ISortRequest>({
-    sortBy: 'updated',
+    sortBy: 'code',
     sortDir: 'asc',
   });
 
+  public sortRequest = computed(() => {
+    return this._sortRequest().sortDir;
+  })
   private readonly _filterRequest = signal<IProjectFilterRequest>({});
 
-  public searchTerm: string = '';
+  public readonly total = signal<number>(0);
+
+  public searchTerm = signal<string>('');
+
+  private searchTerm$ = toObservable(this.searchTerm).pipe(
+    debounceTime(300)
+  );
+
 
   public readonly projects = signal<IProjectResponse[]>([]);
 
+  displayedColumns: string[] = ['code', 'name', 'created', 'modified', 'actions'];
 
   constructor(private router: Router) {
     this.load();
-  }
-  public search(): void {
-    this.load();
+    effect(() => {
+      this.searchTerm$.subscribe(term => {
+        this._filterRequest.set({
+          searchTerm: term
+        })
+        this.load();
+      })
+    });
   }
 
   public load() {
     this.dataSource.getProjects(this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
-      next: (projects) => this.projects.set(projects.items.filter((project) =>
-        project.name.includes(this.searchTerm.toLowerCase())))
+      next: (projects) => {
+        const transformedProjects = projects.items.map(project => ({
+            ...project,
+            createdOn: formatDistanceToNow(new Date(project.createdOn), {addSuffix: true}),
+            modifiedOn: formatDistanceToNow(new Date(project.modifiedOn), {addSuffix: true}),
+          })
+        )
+        this.projects.set(transformedProjects);
+        this.total.set(projects.total);
+        this._pageRequest.set({
+          pageNumber: projects.pageNumber,
+          pageSize: projects.pageSize,
+        })
+      }
     });
-  }
-
-  public sortDirAscending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
-    this.load()
-  }
-  public sortDirDescending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'desc'});
-    this.load()
-  }
-  public sortByAscending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
-    this.load()
-  }
-  public sortByDescending() {
-    this._sortRequest.set({sortBy: 'code', sortDir: 'asc'});
-    this.load()
   }
 
   public createProject(): void {
@@ -109,7 +122,8 @@ export class ProjectComponent {
       this.dataSource.createProject(request).subscribe({
         next: () => {
           this.load()
-        }
+        },
+        error: err => {alert(err.error.detail)}
       })
     });
   }
@@ -122,11 +136,12 @@ export class ProjectComponent {
       this.dataSource.updateProject(projectId, request).subscribe({
         next: () => {
           this.load()
-        }
+        },
+        error: err => {alert(err.error.detail)}
       });
-      console.log('The dialog was closed');
     });
   }
+
   public deleteProject(projectId: string) {
     const dialogRef = this._matDialogRef.open(DeleteProjectDialogComponent)
 
@@ -135,8 +150,35 @@ export class ProjectComponent {
       this.dataSource.deleteProject(projectId).subscribe({
         next: () => {
           this.load()
-        }
+        },
+        error: err => {alert(err.error.detail)}
       });
     });
+  }
+
+  public onPageChange($event: PageEvent) {
+    this._pageRequest.set({
+      pageNumber: $event.pageIndex + 1,
+      pageSize: $event.pageSize,
+    })
+    this.load();
+  }
+
+  public changeSort(sortBy: string) {
+    if (this._sortRequest().sortDir === 'asc') {
+      this._sortRequest.set({
+        sortBy: sortBy,
+        sortDir: "desc"
+      });
+      console.log(this.sortRequest());
+      this.load()
+    }
+    else {
+      this._sortRequest.set({
+        sortBy: sortBy,
+        sortDir: "asc"
+      });
+      this.load()
+    }
   }
 }

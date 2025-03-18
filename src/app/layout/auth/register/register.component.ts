@@ -5,17 +5,19 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButton} from '@angular/material/button';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-register',
-  imports: [
-    MatButton,
-    MatError,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    ReactiveFormsModule
-  ],
+    imports: [
+        MatButton,
+        MatError,
+        MatFormField,
+        MatInput,
+        MatLabel,
+        ReactiveFormsModule,
+        RouterLink
+    ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -48,9 +50,7 @@ export class RegisterComponent {
     if(this.isInvalidState()) return;
 
     this._authService.register(this.loginForm.value).subscribe({
-      next: data => {
-        console.log(data);
-      }
+      error: err => {alert(err.error.detail)}
     })
   }
 }

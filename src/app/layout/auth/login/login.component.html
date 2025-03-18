@@ -1,20 +1,38 @@
-<form class="test" [formGroup]="loginForm" (ngSubmit)="login()">
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email"/>
-    @if(email.hasError('required')) {
-      <mat-error>Email is <strong>required</strong></mat-error>
-    }
-    @if(email.hasError('email')) {
-      <mat-error>Email is not valid</mat-error>
-    }
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input matInput formControlName="password"/>
-    @if(password.hasError('required')) {
-      <mat-error>Password is <strong>required</strong></mat-error>
-    }
-  </mat-form-field>
-  <button mat-button (click)="login()" [disabled]="isInvalidState()">Login</button>
-</form>
+<div class="login">
+  <div class="login__test">
+    <h1>OVRIS - Overcome Issues</h1>
+  </div>
+  <div class="login__form">
+    <form class="login__form__body" [formGroup]="loginForm" (ngSubmit)="login()">
+      <div class="login__form__body__header">
+        <span>Sign in</span>
+      </div>
+      <div class="login__form__body__inputs">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email"/>
+          @if (email.hasError('required')) {
+            <mat-error>Email is <strong>required</strong></mat-error>
+          }
+          @if (email.hasError('email')) {
+            <mat-error>Email is not valid</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password"/>
+          @if (password.hasError('required')) {
+            <mat-error>Password is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="login__form__body__footer">
+        <div class="login__form__body__footer__icon"></div>
+        <div class="login__form__body__footer__buttons">
+          <button mat-button routerLink="/auth/sign-up">Sign up</button>
+          <button mat-flat-button (click)="login()" [disabled]="isInvalidState()">Sign in</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
