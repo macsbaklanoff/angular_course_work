@@ -53,4 +53,10 @@
 .register__form__body > *:not(:first-child) {
   padding: 24px;
 }
-
+@media (width < 400px) {
+  .register {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr;
+  }
+}

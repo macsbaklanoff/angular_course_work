@@ -6,10 +6,6 @@
       <input matInput formControlName="name"/>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Description</mat-label>
-      <input matInput formControlName="description"/>
-    </mat-form-field>
-    <mat-form-field>
       <mat-label>Priority</mat-label>
       <mat-select formControlName="priority">
         @for (priority of priorityes; track priority) {
@@ -22,5 +18,5 @@
 
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button (click)="onCreate()" [disabled]="isInvalidState()">Update</button>
+  <button mat-flat-button (click)="onCreate()" [disabled]="isInvalidState()" cdkFocusInitial>Update</button>
 </mat-dialog-actions>

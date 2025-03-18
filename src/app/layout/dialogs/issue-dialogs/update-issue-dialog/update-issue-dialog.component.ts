@@ -1,5 +1,5 @@
-import {Component, computed, inject, model, Signal, signal} from '@angular/core';
-import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {Component, computed, Inject, inject, model, Signal, signal} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormFieldModule, MatLabel} from '@angular/material/form-field';
@@ -26,15 +26,13 @@ import {MatOption, MatSelect} from '@angular/material/select';
 })
 export class UpdateIssueDialogComponent {
 
+
   private readonly _dialogRef = inject(MatDialogRef<UpdateIssueDialogComponent>);
 
   public readonly isInvalidState: Signal<boolean> = computed(() => {
     return this.createFormStatusChange() != "VALID"
   })
 
-  constructor() {
-
-  }
   public updateForm: FormGroup = new FormGroup({
     name: new FormControl<string>("", []),
     description: new FormControl<string>("", []),
@@ -46,9 +44,6 @@ export class UpdateIssueDialogComponent {
 
   public get name(): FormControl {
     return this.updateForm.controls['name'] as FormControl;
-  }
-  public get description(): FormControl {
-    return this.updateForm.controls['description'] as FormControl;
   }
   public get priority(): FormControl {
     return this.updateForm.controls['priority'] as FormControl;

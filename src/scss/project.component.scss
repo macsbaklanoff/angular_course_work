@@ -8,15 +8,18 @@
 .project-component {
   display: grid;
   padding-inline: 50px;
+
   &__view {
     display: grid;
     gap: 30px;
+
     &__projects {
       display: grid;
       grid-template-columns: 1fr;
       //background-color: var(--md-sys-surface);
       background-color: var(--mat-sys-surface);
       border-radius: 20px;
+
       &__header {
         display: grid;
         align-items: center;
@@ -27,6 +30,7 @@
         border-radius: 20px 20px 0px 0px;
         padding: 10px;
         font-size: 18px;
+
         &__text {
           color: var(--mat-sys-on-primary);
         }
@@ -34,9 +38,10 @@
 
       &__search {
         display: grid;
-        grid-template-columns: minmax(10px, 1fr) minmax(10px, 100px);
+        grid-template-columns: minmax(10px, 1fr);
         gap: 16px;
         justify-content: space-between;
+
         &__input {
           border-radius: 16px;
           height: 24px;
@@ -44,6 +49,7 @@
       }
     }
   }
+
   &__issues {
     margin-right: 30px;
     padding: 10px;
@@ -51,35 +57,70 @@
     border-radius: 20px;
   }
 }
+
 p {
   margin: 0;
   padding: 5px;
 }
+
 .th-header {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
-@media (width < 890px) {
+
+@media (width < 700px) {
   .project-component {
-    &__header {
-      display: none;
-    }
-    &__view {
-      display: grid;
-      grid-template-columns: 1fr;
-    }
+    padding-inline: 0px;
   }
 }
-@media (width < 460px) {
+
+@media (width < 600px) {
   .project-component {
     &__view {
       &__projects {
-        &__search {
-          display: grid;
-          grid-template-columns: 1fr;
+        &__content {
+          &__column-tablet {
+            display: none;
+          }
         }
       }
     }
   }
 }
+@media (width < 300px) {
+  .project-component {
+    &__view {
+      &__projects {
+        &__content {
+          &__column-phone {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+//@media (width < 890px) {
+//  .project-component {
+//    &__header {
+//      display: none;
+//    }
+//    &__view {
+//      display: grid;
+//      grid-template-columns: 1fr;
+//    }
+//  }
+//}
+//@media (width < 460px) {
+//  .project-component {
+//    &__view {
+//      &__projects {
+//        &__search {
+//          display: grid;
+//          grid-template-columns: 1fr;
+//        }
+//      }
+//    }
+//  }
+//}

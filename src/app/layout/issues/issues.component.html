@@ -6,11 +6,7 @@
       </div>
       <div class="issue-component__view__header__opt">
         <div class="issue-component__view__header__opt__search">
-          <input type="text" class="issue-component__view__header__opt__search__input" [(ngModel)]="searchTerm">
-          <button mat-button (click)="search()">
-            <mat-icon>search</mat-icon>
-            Search
-          </button>
+          <input type="text" class="issue-component__view__header__opt__search__input" [(ngModel)]="searchTerm" placeholder="Search">
         </div>
         <div class="issue-component__view__header__opt__options">
           <mat-form-field class="issue-component__view__header__opt__options__multiselect">
@@ -58,7 +54,7 @@
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                           <mat-icon>more_vert</mat-icon>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="updateIssue(item.id)">
+                            <button mat-menu-item (click)="updateIssue(item)">
                               <mat-icon style="color: green;">arrow_upward</mat-icon>
                               <span style="color: green;">Update</span>
                             </button>
@@ -100,7 +96,7 @@
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                           <mat-icon>more_vert</mat-icon>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="updateIssue(item.id)">
+                            <button mat-menu-item (click)="updateIssue(item)">
                               <mat-icon style="color: green;">arrow_upward</mat-icon>
                               <span style="color: green;">Update</span>
                             </button>
@@ -142,7 +138,7 @@
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                           <mat-icon>more_vert</mat-icon>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="updateIssue(item.id)">
+                            <button mat-menu-item (click)="updateIssue(item)">
                               <mat-icon style="color: green;">arrow_upward</mat-icon>
                               <span style="color: green;">Update</span>
                             </button>
@@ -184,7 +180,7 @@
                         <button mat-icon-button [matMenuTriggerFor]="menu">
                           <mat-icon>more_vert</mat-icon>
                           <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="updateIssue(item.id)">
+                            <button mat-menu-item (click)="updateIssue(item)">
                               <mat-icon style="color: green;">arrow_upward</mat-icon>
                               <span style="color: green;">Update</span>
                             </button>

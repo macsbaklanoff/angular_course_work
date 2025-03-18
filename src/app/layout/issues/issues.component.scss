@@ -26,12 +26,15 @@ $border-radius: 20px;
         }
       }
       &__opt {
+        display: grid;
+        gap: 16px;
         background-color: var(--mat-sys-surface);
         padding: 10px;
         border-radius: 0px 0px 20px 20px;
         &__search {
           display: grid;
-          grid-template-columns: 1fr minmax(10px, 100px);
+          //grid-template-columns: 1fr minmax(10px, 100px);
+          grid-template-columns: 1fr;
           gap: 16px;
           justify-content: space-between;
           &__input {
@@ -44,7 +47,7 @@ $border-radius: 20px;
             width: 100%;
             &__item {
               display: grid;
-              grid-template-columns: 1fr minmax(10px, 150px);
+              grid-template-columns: minmax(100px, 1fr) minmax(10px, 150px);
             }
           }
         }
@@ -55,7 +58,7 @@ $border-radius: 20px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 24px;
-      min-height: 600px;
+      min-height: 400px;
     }
   }
 }
@@ -65,10 +68,9 @@ $border-radius: 20px;
   max-width: 400px;
   min-width: 110px;
   padding: 8px;
-  justify-content: center;
   //background-color: var(--md-sys-primary-35);
-  background-color: var(--mat-sys-secondary-fixed-dim);
-  color: var(--mat-sys-on-secondary-fixed);
+  background-color: var(--mat-sys-secondary);
+  color: var(--mat-sys-on-secondary);
   border-radius: 16px;
 }
 
@@ -131,4 +133,33 @@ $border-radius: 20px;
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+@media (width < 700px) {
+  .issue-component {
+    padding-inline: 0px;
+    &__view {
+      &__content {
+        grid-template-columns: 1fr 1fr;
+        min-height: 200px;
+      }
+    }
+  }
+}
+
+@media (width < 300px) {
+  .issue-component {
+    &__view {
+      &__content {
+        grid-template-columns: min-content;
+        min-height: 200px;
+      }
+    }
+  }
+  .example-box {
+    &__content {
+
+    }
+  }
 }

@@ -38,6 +38,8 @@ import {IProjectResponse} from '../../interfaces/responses/project/project-respo
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatProgressBar} from '@angular/material/progress-bar';
 import {issuePriority} from '../../types/issue-type';
+import {toObservable} from '@angular/core/rxjs-interop';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-issues',
@@ -93,18 +95,45 @@ export class IssuesComponent {
 
   public isLoading = signal<boolean>(false);
 
-  public searchTerm: string = '';
+  public searchTerm = signal<string>('');
+
+  private searchTerm$ = toObservable(this.searchTerm).pipe(
+    debounceTime(300)
+  );
 
   public priorityColors: { [key: string]: string } = {
-    'Critical': '#DB4242', // Красный
-    'Major': '#EBA134', // Оранжевый
-    'Normal': '#dbd765', // Жёлтый
-    'Minor': '#45a85b', // Зелёный
+    'Critical': '#DB4242',
+    'Major': '#EBA134',
+    'Normal': '#dbd765',
+    'Minor': '#45a85b',
   };
 
   toppings = new FormControl('');
   public projectsList: IProjectResponse[] = [];
   public projectIds: string[] = [];
+
+  constructor() {
+    this.projectDataSource.getProjects().subscribe({
+      next: projects => {
+        this.projectsList = projects.items
+        //this.projectIds.push(projects.items[0].id)
+        this.load()
+      }
+    })
+    this.toppings.valueChanges.subscribe((selectedIds) => {
+      if (selectedIds == null) return;
+      this.projectIds = [...selectedIds]
+      this.load()
+    });
+    effect(() => {
+      this.searchTerm$.subscribe(term => {
+        this._filterRequest.set({
+          searchTerm: term
+        })
+        this.load();
+      })
+    });
+  }
 
 
   drop(event: CdkDragDrop<IIssueResponse[]>) {
@@ -183,50 +212,6 @@ export class IssuesComponent {
     }
   }
 
-  constructor() {
-    this.projectDataSource.getProjects().subscribe({
-      next: projects => {
-        this.projectsList = projects.items
-        //this.projectIds.push(projects.items[0].id)
-        this.load()
-      }
-    })
-    this.toppings.valueChanges.subscribe((selectedIds) => {
-      if (selectedIds == null) return;
-      this.projectIds = [...selectedIds]
-      this.load()
-    });
-    effect(() => {
-      //this.issueDataSource._projectId.set(this.projectId());
-      //this.load()
-    });
-  }
-
-  public search() {
-    //this.load()
-    console.log(this.toppings.value)
-  }
-
-  public sortDirAscending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
-    this.load()
-  }
-
-  public sortDirDescending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'desc'});
-    this.load()
-  }
-
-  public sortByAscending() {
-    this._sortRequest.set({sortBy: 'updated', sortDir: 'asc'});
-    this.load()
-  }
-
-  public sortByDescending() {
-    this._sortRequest.set({sortBy: 'code', sortDir: 'asc'});
-    this.load()
-  }
-
   public load(): void {
     if (this.projectIds.length == 0) return;
     this.issueDataSource.getIssues(this.projectIds, this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
@@ -277,13 +262,17 @@ export class IssuesComponent {
     });
   }
 
-  public updateIssue(issueId: string): void {
-    const dialogRef = this._matDialogRef.open(UpdateIssueDialogComponent)
+  public updateIssue(issue: IIssueResponse): void {
+    const dialogRef = this._matDialogRef.open(UpdateIssueDialogComponent, {
+      data: {
+        issueName: issue.name
+      }
+    })
 
     dialogRef.afterClosed().subscribe((request: IIssueUpdateRequest) => {
       if (!request) return;
 
-      this.issueDataSource.updateIssue(issueId, request).subscribe({
+      this.issueDataSource.updateIssue(issue.id, request).subscribe({
         next: () => {
           this.load()
         }

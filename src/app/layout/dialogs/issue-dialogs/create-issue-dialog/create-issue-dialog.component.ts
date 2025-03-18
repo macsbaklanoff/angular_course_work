@@ -34,7 +34,6 @@ export class CreateIssueDialogComponent {
 
   public createForm: FormGroup = new FormGroup({
     name: new FormControl<string>("", [Validators.required]),
-    description: new FormControl<string>("", []),
     priority: new FormControl<string>("", [Validators.required]),
   });
 
@@ -42,9 +41,6 @@ export class CreateIssueDialogComponent {
 
   public get name(): FormControl {
     return this.createForm.controls['name'] as FormControl;
-  }
-  public get description(): FormControl {
-    return this.createForm.controls['description'] as FormControl;
   }
   public get priority(): FormControl {
     return this.createForm.controls['priority'] as FormControl;

@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal} from '@angular/core';
 import {ProjectDataSource} from '../../data-sources/project.data-source';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule} from '@angular/forms';
@@ -29,7 +29,8 @@ import {MatInput} from '@angular/material/input';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {IPageResponse} from '../../interfaces/responses/project/page-response.interface';
 import {formatDistanceToNow} from 'date-fns';
-import {map} from 'rxjs/operators';
+import {debounceTime, map} from 'rxjs/operators';
+import {toObservable} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-project',
@@ -75,7 +76,12 @@ export class ProjectComponent {
   })
   private readonly _filterRequest = signal<IProjectFilterRequest>({});
 
-  public searchTerm: string = '';
+  public searchTerm = signal<string>('');
+
+  private searchTerm$ = toObservable(this.searchTerm).pipe(
+    debounceTime(300)
+  );
+
 
   public readonly projects = signal<IProjectResponse[]>([]);
 
@@ -83,6 +89,14 @@ export class ProjectComponent {
 
   constructor(private router: Router) {
     this.load();
+    effect(() => {
+      this.searchTerm$.subscribe(term => {
+        this._filterRequest.set({
+          searchTerm: term
+        })
+        this.load();
+      })
+    });
   }
 
   public search(): void {

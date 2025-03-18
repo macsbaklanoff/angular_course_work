@@ -33,12 +33,20 @@
 
   &__account {
     display: flex;
+    color: var(--mat-sys-on-primary);
   }
 }
 
 .content {
   grid-column: main;
   grid-row: content;
+}
+
+@media (width < 901px) {
+  .header {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (width < 901px) {
