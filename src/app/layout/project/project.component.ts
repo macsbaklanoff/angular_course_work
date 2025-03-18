@@ -42,7 +42,7 @@ import {toObservable} from '@angular/core/rxjs-interop';
     MatPaginator
   ],
   templateUrl: './project.component.html',
-  styleUrl: '../../../scss/project.component.scss'
+  styleUrl: './project.component.scss'
 })
 export class ProjectComponent {
   private readonly _matDialogRef = inject(MatDialog);

@@ -13,7 +13,7 @@ import {RouterLink} from '@angular/router';
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrl: '../../scss/navigation.component.scss',
+  styleUrl: './navigation.component.scss',
   imports: [
     MatToolbarModule,
     MatButtonModule,
