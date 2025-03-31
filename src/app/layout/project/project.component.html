@@ -19,6 +19,11 @@
       <div class="project-component__view__projects__options">
         <button mat-flat-button (click)="createProject()">Create Project</button>
       </div>
+      <div>
+        @if (dataSource.isLoading()) {
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+      </div>
       <div class="project-component__view__projects__content">
         <table mat-table [dataSource]="dataSource.data()">
           <ng-container matColumnDef="code">

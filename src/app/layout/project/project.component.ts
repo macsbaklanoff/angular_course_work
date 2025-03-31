@@ -23,6 +23,7 @@ import {debounceTime} from 'rxjs/operators';
 import {toObservable} from '@angular/core/rxjs-interop';
 import {MatFormField, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
+import {MatProgressBar} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-project',
@@ -40,6 +41,7 @@ import {MatInput} from '@angular/material/input';
     MatInput,
     MatPrefix,
     MatSuffix,
+    MatProgressBar,
   ],
   templateUrl: './project.component.html',
   styleUrl: './project.component.scss'
