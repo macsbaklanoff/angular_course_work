@@ -71,10 +71,9 @@ export class ProjectComponent {
   }
 
   public load() {
-    this.dataSource.sortRequest.set({
-      sortBy: 'code',
-      sortDir: 'asc',
-    })
+    this.dataSource.filterRequest.set({
+      searchTerm: this.searchTerm()
+    });
   }
 
   public createProject(): void {
