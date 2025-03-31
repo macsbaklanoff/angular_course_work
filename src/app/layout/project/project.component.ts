@@ -1,9 +1,8 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, Signal, signal} from '@angular/core';
 import {ProjectDataSource} from '../../data-sources/project.data-source';
 import {MatTableModule} from '@angular/material/table';
 import {FormsModule} from '@angular/forms';
 import {MatButton, MatIconButton} from '@angular/material/button';
-import {ProjectService} from '../../services/project.service';
 import {MatDialog} from '@angular/material/dialog';
 import {
   CreateProjectDialogComponent
@@ -26,7 +25,7 @@ import {IProjectUpdateRequest} from '../../interfaces/requests/project/update-pr
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {formatDistanceToNow} from 'date-fns';
 import {debounceTime} from 'rxjs/operators';
-import {toObservable} from '@angular/core/rxjs-interop';
+import {rxResource, toObservable} from '@angular/core/rxjs-interop';
 import {MatFormField, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 
@@ -53,8 +52,6 @@ import {MatInput} from '@angular/material/input';
 export class ProjectComponent {
   private readonly _matDialogRef = inject(MatDialog);
 
-  public dataSource = new ProjectDataSource();
-
   private readonly _pageRequest = signal<IPageRequest>({
     pageNumber: 1,
     pageSize: 5,
@@ -65,21 +62,20 @@ export class ProjectComponent {
     sortDir: 'asc',
   });
 
+  private readonly _filterRequest = signal<IProjectFilterRequest>({});
+
+
+  public dataSource = new ProjectDataSource();
+
   public sortRequest = computed(() => {
     return this._sortRequest().sortDir;
   })
-  private readonly _filterRequest = signal<IProjectFilterRequest>({});
-
-  public readonly total = signal<number>(0);
 
   public searchTerm = signal<string>('');
 
   private searchTerm$ = toObservable(this.searchTerm).pipe(
     debounceTime(300)
   );
-
-
-  public readonly projects = signal<IProjectResponse[]>([]);
 
   displayedColumns: string[] = ['code', 'name', 'created', 'modified', 'actions'];
 
@@ -95,23 +91,40 @@ export class ProjectComponent {
     });
   }
 
+  private readonly _projectResource = rxResource({
+    request: () => ({
+      pageRequest: this._pageRequest(),
+      sortRequest: this._sortRequest(),
+      filterRequest: this._filterRequest()
+    }),
+    loader: ({request}) =>
+      this.dataSource.getProjects(request.pageRequest, request.sortRequest, request.filterRequest)
+  });
+
+
+  public readonly projects = computed<IProjectResponse[]>(() => {
+    return this._projectResource.value()?.items.map(project => ({
+      ...project,
+      createdOn: formatDistanceToNow(new Date(project.createdOn), {addSuffix: true}),
+      modifiedOn: formatDistanceToNow(new Date(project.modifiedOn), {addSuffix: true}),
+    })) ?? [];
+  });
+
+  public readonly total = computed(() => {
+    return this._projectResource.value()?.total ?? 0;
+  })
+
+  public readonly isLoading = computed<boolean>(() => {
+    return this._projectResource.isLoading();
+  })
+
+
+
   public load() {
-    this.dataSource.getProjects(this._pageRequest(), this._sortRequest(), this._filterRequest()).subscribe({
-      next: (projects) => {
-        const transformedProjects = projects.items.map(project => ({
-            ...project,
-            createdOn: formatDistanceToNow(new Date(project.createdOn), {addSuffix: true}),
-            modifiedOn: formatDistanceToNow(new Date(project.modifiedOn), {addSuffix: true}),
-          })
-        )
-        this.projects.set(transformedProjects);
-        this.total.set(projects.total);
-        this._pageRequest.set({
-          pageNumber: projects.pageNumber,
-          pageSize: projects.pageSize,
-        })
-      }
-    });
+   this._sortRequest.set({
+     sortBy: 'code',
+     sortDir: 'asc',
+   })
   }
 
   public createProject(): void {
@@ -161,7 +174,6 @@ export class ProjectComponent {
       pageNumber: $event.pageIndex + 1,
       pageSize: $event.pageSize,
     })
-    this.load();
   }
 
   public changeSort(sortBy: string) {
@@ -170,15 +182,12 @@ export class ProjectComponent {
         sortBy: sortBy,
         sortDir: "desc"
       });
-      console.log(this.sortRequest());
-      this.load()
     }
     else {
       this._sortRequest.set({
         sortBy: sortBy,
         sortDir: "asc"
       });
-      this.load()
     }
   }
 }
