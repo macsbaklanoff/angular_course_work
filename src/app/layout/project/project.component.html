@@ -9,7 +9,8 @@
           <mat-icon matIconPrefix class="project-component__view__projects__search__input__prefix">search</mat-icon>
           <input matInput placeholder="Search" [(ngModel)]="searchTerm">
           @if (searchTerm() != '') {
-            <button matSuffix mat-icon-button class="project-component__view__projects__search__input__suffix" (click)="searchTerm.set('')">
+            <button matSuffix mat-icon-button class="project-component__view__projects__search__input__suffix"
+                    (click)="searchTerm.set('')">
               <mat-icon>close</mat-icon>
             </button>
           }
@@ -19,12 +20,12 @@
         <button mat-flat-button (click)="createProject()">Create Project</button>
       </div>
       <div class="project-component__view__projects__content">
-        <table mat-table [dataSource]="projects()">
+        <table mat-table [dataSource]="dataSource.data()">
           <ng-container matColumnDef="code">
             <th mat-header-cell *matHeaderCellDef>
-              <span class="th-header" (click)="changeSort('code')">
+              <span class="th-header" (click)="dataSource.changeSort('code')">
                 <span>Code</span>
-                @if (sortRequest() == 'asc') {
+                @if (dataSource.sortRequest().sortDir == 'asc') {
                   <span class="material-symbols-outlined">
                     arrow_drop_up
                   </span>
@@ -39,9 +40,9 @@
           </ng-container>
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="project-component__view__projects__content__column-phone">
-              <span class="th-header" (click)="changeSort('name')">
+              <span class="th-header" (click)="dataSource.changeSort('name')">
                 <span>Name</span>
-                @if (sortRequest() == 'asc') {
+                @if (dataSource.sortRequest().sortDir == 'asc') {
                   <span class="material-symbols-outlined">
                     arrow_drop_up
                   </span>
@@ -58,9 +59,9 @@
           </ng-container>
           <ng-container matColumnDef="created" class="project-component__view__projects__content__column-tablet">
             <th mat-header-cell *matHeaderCellDef class="project-component__view__projects__content__column-tablet">
-              <span class="th-header" (click)="changeSort('createdOn')">
+              <span class="th-header" (click)="dataSource.changeSort('createdOn')">
                 <span>Created</span>
-                @if (sortRequest() == 'asc') {
+                @if (dataSource.sortRequest().sortDir == 'asc') {
                   <span class="material-symbols-outlined">
                     arrow_drop_down
                   </span>
@@ -77,9 +78,9 @@
           </ng-container>
           <ng-container matColumnDef="modified">
             <th mat-header-cell *matHeaderCellDef class="project-component__view__projects__content__column-tablet">
-              <span class="th-header" (click)="changeSort('modifiedOn')">
+              <span class="th-header" (click)="dataSource.changeSort('modifiedOn')">
                 <span>Modified</span>
-                @if (sortRequest() == 'asc') {
+                @if (dataSource.sortRequest().sortDir == 'asc') {
                   <span class="material-symbols-outlined">
                     arrow_drop_down
                   </span>
@@ -115,9 +116,9 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [length]="total()"
+        <mat-paginator [length]="dataSource.total()"
                        [pageSizeOptions]="[5, 10, 25, 100]"
-                       (page)="onPageChange($event)"
+                       (page)="dataSource.onPageChange($event)"
                        aria-label="Select page">
         </mat-paginator>
       </div>
